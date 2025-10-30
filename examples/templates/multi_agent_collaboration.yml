@@ -1,0 +1,56 @@
+version: "0.1"
+name: "Multi-Agent Collaboration Template"
+description: "A template for complex workflows with multiple specialized agents"
+agents:
+  planner:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Create a plan for: {{input}}"
+    parameters:
+      temperature: 0.4
+      max_tokens: 800
+
+  specialist1:
+    model: "claude-3-sonnet-20240229"
+    provider: "anthropic"
+    prompt: "Execute part 1 of the plan: {{planner.output}}"
+    parameters:
+      temperature: 0.5
+      max_tokens: 1200
+
+  specialist2:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Execute part 2 of the plan: {{planner.output}}, using results from specialist1: {{specialist1.output}}"
+    parameters:
+      temperature: 0.5
+      max_tokens: 1200
+
+  integrator:
+    model: "claude-3-haiku-20240307"
+    provider: "anthropic"
+    prompt: "Integrate results from all specialists. Specialist1: {{specialist1.output}}, Specialist2: {{specialist2.output}}"
+    parameters:
+      temperature: 0.4
+      max_tokens: 1000
+
+workflow:
+  - type: agent
+    step: "create_plan"
+    agent: "planner"
+    save: "plan"
+
+  - type: agent
+    step: "execute_specialist1"
+    agent: "specialist1"
+    save: "specialist1_result"
+
+  - type: agent
+    step: "execute_specialist2"
+    agent: "specialist2"
+    save: "specialist2_result"
+
+  - type: agent
+    step: "integrate_results"
+    agent: "integrator"
+    save: "final_result"

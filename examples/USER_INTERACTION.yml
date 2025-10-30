@@ -1,0 +1,90 @@
+name: "User Interaction Demo"
+description: "Demonstrates dynamic user interaction in Pulsar workflows"
+version: "1.0.0"
+
+# Define the workflow steps
+steps:
+  - name: "gather_preferences"
+    type: "interaction"
+    description: "Collect user preferences for project generation"
+    provider: "console"  # Can be 'console', 'web', 'file', or 'test'
+    questions:
+      - question: "What type of project do you want to create?"
+        type: "multiple_choice"
+        options: ["Web Application", "API Service", "Data Analysis", "Machine Learning", "CLI Tool"]
+        required: true
+        default: "Web Application"
+      - question: "Which programming language do you prefer?"
+        type: "multiple_choice"
+        options: ["Python", "JavaScript/TypeScript", "Java", "Go", "Rust"]
+        required: true
+        default: "Python"
+      - question: "What is your experience level?"
+        type: "multiple_choice"
+        options: ["Beginner", "Intermediate", "Advanced", "Expert"]
+        required: true
+      - question: "Do you need database integration?"
+        type: "boolean"
+        default: false
+      - question: "Describe your project requirements in detail"
+        type: "text"
+        placeholder: "Be specific about features, technologies, and goals..."
+        required: true
+    save_to: "user_preferences"
+
+  - name: "analyze_requirements"
+    type: "agent"
+    description: "Analyze user requirements and create technical specifications"
+    agent: "openai"
+    prompt: |
+      Based on the user's preferences: {{user_preferences}}
+
+      Create a detailed technical specification including:
+      1. Recommended technology stack
+      2. Project structure
+      3. Key features to implement
+      4. Development approach
+
+      Be specific and actionable.
+    save_to: "technical_spec"
+
+  - name: "generate_project_structure"
+    type: "agent"
+    description: "Generate the initial project structure and files"
+    agent: "openai"
+    prompt: |
+      Based on this technical specification: {{technical_spec}}
+
+      Generate a complete project structure with:
+      1. Directory layout
+      2. Main application files
+      3. Configuration files
+      4. Dependencies list
+
+      Provide actual file contents for key files.
+    save_to: "project_files"
+
+  - name: "create_summary"
+    type: "agent"
+    description: "Create a summary of the generated project"
+    agent: "openai"
+    prompt: |
+      Create a comprehensive README for the project based on:
+      - User preferences: {{user_preferences}}
+      - Technical specification: {{technical_spec}}
+      - Project files: {{project_files}}
+
+      Include setup instructions, features, and next steps.
+    save_to: "project_summary"
+
+# Configuration
+config:
+  max_retries: 3
+  timeout: 300
+  log_level: "INFO"
+
+# Metadata
+metadata:
+  author: "Pulsar Workflow Engine"
+  tags: ["demo", "user-interaction", "project-generation"]
+  category: "Development Tools"

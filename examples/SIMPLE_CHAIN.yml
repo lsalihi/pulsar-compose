@@ -1,0 +1,43 @@
+version: "0.1"
+name: "Content Generation Chain"
+description: "A simple sequential workflow that generates blog content through multiple AI agents"
+agents:
+  idea_generator:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Generate 5 creative and engaging blog post ideas about {{input}}. Format each idea with a title and brief description."
+    parameters:
+      temperature: 0.8
+      max_tokens: 500
+
+  outline_generator:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Create a detailed outline for this blog post idea: {{idea_generator.output}}. Include introduction, main sections, and conclusion."
+    parameters:
+      temperature: 0.7
+      max_tokens: 800
+
+  content_writer:
+    model: "claude-3-sonnet-20240229"
+    provider: "anthropic"
+    prompt: "Write a complete, engaging blog post based on this outline: {{outline_generator.output}}. Make it approximately 800-1000 words, SEO-friendly, and include relevant subheadings."
+    parameters:
+      temperature: 0.6
+      max_tokens: 2000
+
+workflow:
+  - type: agent
+    step: "generate_ideas"
+    agent: "idea_generator"
+    save: "blog_ideas"
+
+  - type: agent
+    step: "create_outline"
+    agent: "outline_generator"
+    save: "blog_outline"
+
+  - type: agent
+    step: "write_content"
+    agent: "content_writer"
+    save: "final_content"

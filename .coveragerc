@@ -1,0 +1,25 @@
+[tool.coverage.run]
+source = ["agents", "engine", "models", "cli"]
+omit =
+    */tests/*,
+    */test_*,
+    */conftest.py,
+    */__pycache__/*,
+    */venv/*,
+    */.venv/*
+
+[tool.coverage.report]
+exclude_lines =
+    pragma: no cover,
+    def __repr__,
+    raise AssertionError,
+    raise NotImplementedError,
+    if __name__ == .__main__.,
+    class .*\bProtocol\):,
+    @(abc\.)?abstractmethod
+
+[tool.coverage.html]
+directory = htmlcov
+
+[tool.coverage.xml]
+output = coverage.xml

@@ -1,0 +1,78 @@
+version: "0.1"
+name: "Quality-Gated Content Creation"
+description: "A conditional workflow that creates content and reviews it for quality before publishing"
+agents:
+  content_generator:
+    model: "claude-3-haiku-20240307"
+    provider: "anthropic"
+    prompt: "Write a comprehensive article about {{input}}. Make it informative, well-structured, and engaging. Include relevant examples and data where appropriate."
+    parameters:
+      temperature: 0.7
+      max_tokens: 1500
+
+  quality_reviewer:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Review this content for quality: {{content_generator.output}}. Rate it on a scale of 1-10 for: accuracy, readability, engagement, and completeness. Provide specific feedback and a final score."
+    parameters:
+      temperature: 0.3
+      max_tokens: 600
+
+  content_improver:
+    model: "claude-3-sonnet-20240229"
+    provider: "anthropic"
+    prompt: "Improve this content based on the feedback: {{quality_reviewer.output}}. Original content: {{content_generator.output}}. Make the improvements while maintaining the original intent."
+    parameters:
+      temperature: 0.5
+      max_tokens: 1500
+
+  publisher:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Format this content for publication: {{final_content}}. Add appropriate meta tags, SEO optimization, and publication-ready formatting."
+    parameters:
+      temperature: 0.2
+      max_tokens: 800
+
+workflow:
+  - type: agent
+    step: "generate_draft"
+    agent: "content_generator"
+    save: "draft_content"
+
+  - type: agent
+    step: "review_quality"
+    agent: "quality_reviewer"
+    save: "quality_review"
+
+  - type: conditional
+    step: "quality_gate"
+    if: "{{quality_review | regex_search(r'Final score: (\\d+)') | int > 7}}"
+    then:
+      - type: agent
+        step: "publish_content"
+        agent: "publisher"
+        save: "published_content"
+    else:
+      - type: agent
+        step: "improve_content"
+        agent: "content_improver"
+        save: "improved_content"
+      - type: agent
+        step: "final_review"
+        agent: "quality_reviewer"
+        save: "final_quality_review"
+      - type: conditional
+        step: "final_gate"
+        if: "{{final_quality_review | regex_search(r'Final score: (\\d+)') | int > 6}}"
+        then:
+          - type: agent
+            step: "publish_improved"
+            agent: "publisher"
+            save: "published_content"
+        else:
+          - type: agent
+            step: "final_publish_anyway"
+            agent: "publisher"
+            context: "Publish this content despite lower quality score. Add disclaimer about needing further review."
+            save: "published_content"

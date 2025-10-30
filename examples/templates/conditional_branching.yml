@@ -1,0 +1,47 @@
+version: "0.1"
+name: "Conditional Workflow Template"
+description: "A template for workflows with conditional branching"
+agents:
+  analyzer:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Analyze this input and provide a score (1-10): {{input}}"
+    parameters:
+      temperature: 0.3
+      max_tokens: 500
+
+  high_quality_processor:
+    model: "claude-3-sonnet-20240229"
+    provider: "anthropic"
+    prompt: "Process this high-quality input: {{input}}"
+    parameters:
+      temperature: 0.5
+      max_tokens: 1000
+
+  low_quality_processor:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Process this input that needs improvement: {{input}}"
+    parameters:
+      temperature: 0.7
+      max_tokens: 1000
+
+workflow:
+  - type: agent
+    step: "analyze"
+    agent: "analyzer"
+    save: "analysis"
+
+  - type: conditional
+    step: "quality_check"
+    if: "{{analysis | regex_search(r'score: (\\d+)') | int > 7}}"
+    then:
+      - type: agent
+        step: "process_high_quality"
+        agent: "high_quality_processor"
+        save: "result"
+    else:
+      - type: agent
+        step: "process_low_quality"
+        agent: "low_quality_processor"
+        save: "result"

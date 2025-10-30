@@ -1,0 +1,30 @@
+version: "0.1"
+name: "Basic Sequential Workflow Template"
+description: "A simple template for sequential agent execution"
+agents:
+  agent1:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Process this input: {{input}}"
+    parameters:
+      temperature: 0.7
+      max_tokens: 1000
+
+  agent2:
+    model: "claude-3-haiku-20240307"
+    provider: "anthropic"
+    prompt: "Process the output from agent1: {{agent1.output}}"
+    parameters:
+      temperature: 0.7
+      max_tokens: 1000
+
+workflow:
+  - type: agent
+    step: "step1"
+    agent: "agent1"
+    save: "result1"
+
+  - type: agent
+    step: "step2"
+    agent: "agent2"
+    save: "result2"

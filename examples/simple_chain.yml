@@ -1,0 +1,20 @@
+version: "0.1"
+name: "Code Generator"
+agents:
+  code_generator:
+    model: "qwen2.5-coder:7b"
+    provider: "local"
+    prompt: "Create code for: {{input}}"
+  tester:
+    model: "qwen2.5-coder:7b"
+    provider: "local"
+    prompt: "Test: {{code_generator.output}}"
+workflow:
+  - type: agent
+    step: "generate"
+    agent: "code_generator"
+    save: "code"
+  - type: agent
+    step: "test"
+    agent: "tester"
+    context: "Test this code: {{code}}"

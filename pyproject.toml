@@ -1,0 +1,87 @@
+[tool.poetry]
+name = "pulsar-compose"
+version = "0.1.0"
+description = "Pulsar Workflow Engine for orchestrating AI agents"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pydantic = "^2.0.0"
+click = "^8.1.7"
+openai = "^1.3.0"
+jinja2 = "^3.1.2"
+pyyaml = "^6.0"
+anthropic = "^0.7.8"
+aiohttp = "^3.9.1"
+tenacity = "^8.2.3"
+rich = "^13.7.0"
+httpx = "<0.25.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.3"
+pytest-asyncio = "^0.21.1"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.12.0"
+pytest-xdist = "^3.5.0"
+pytest-benchmark = "^4.0.0"
+pytest-html = "^4.1.1"
+pytest-timeout = "^2.2.0"
+responses = "^0.24.1"
+faker = "^20.1.0"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=agents",
+    "--cov=engine", 
+    "--cov=models",
+    "--cov=cli",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml",
+    "--cov-fail-under=59",
+    "-v",
+    "--tb=short"
+]
+markers = [
+    "unit: Unit tests for individual components",
+    "integration: Tests for component interactions",
+    "e2e: End-to-end workflow tests",
+    "performance: Performance and load tests",
+    "slow: Slow running tests",
+    "mock: Tests using mock providers"
+]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["agents", "engine", "models", "cli"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/conftest.py",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/.venv/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod"
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

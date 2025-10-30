@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  pulsar:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pulsar-workflow-engine
+    volumes:
+      - ./workflows:/home/pulsar/workflows:ro
+      - pulsar_data:/home/pulsar/.pulsar
+      - ./examples:/home/pulsar/examples:ro
+    environment:
+      - PULSAR_CONFIG_FILE=/home/pulsar/.pulsar/config.toml
+      - PULSAR_WORKFLOW_DIR=/home/pulsar/workflows
+      - PULSAR_LOG_LEVEL=INFO
+    networks:
+      - pulsar-network
+    restart: unless-stopped
+    command: ["run", "--help"]
+
+  # Optional: Ollama service for local AI models
+  ollama:
+    image: ollama/ollama:latest
+    container_name: pulsar-ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    networks:
+      - pulsar-network
+    restart: unless-stopped
+    profiles:
+      - with-ollama
+
+  # Optional: Redis for caching and state management (future feature)
+  redis:
+    image: redis:7-alpine
+    container_name: pulsar-redis
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - pulsar-network
+    restart: unless-stopped
+    profiles:
+      - with-redis
+
+volumes:
+  pulsar_data:
+    driver: local
+  ollama_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  pulsar-network:
+    driver: bridge

@@ -1,0 +1,31 @@
+version: "0.1"
+name: "Conditional Workflow"
+agents:
+  decider:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Decide if {{input}} is positive or negative. Output 'positive' or 'negative'."
+  positive_agent:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Respond positively to: {{input}}"
+  negative_agent:
+    model: "gpt-4"
+    provider: "openai"
+    prompt: "Respond negatively to: {{input}}"
+workflow:
+  - type: agent
+    step: "decide"
+    agent: "decider"
+    save: "decision"
+  - type: conditional
+    step: "branch"
+    if: "{{decision}} == 'positive'"
+    then:
+      - type: agent
+        step: "positive_response"
+        agent: "positive_agent"
+    else:
+      - type: agent
+        step: "negative_response"
+        agent: "negative_agent"
