@@ -84,9 +84,19 @@ html_static_path = ['_static']
 html_css_files = ['custom.css']
 html_baseurl = '/pulsar-compose/'
 
+# HTML context for proper URL generation
+html_context = {
+    'display_github': True,
+    'github_user': 'lsalihi',
+    'github_repo': 'pulsar-compose',
+    'github_version': 'master',
+    'conf_py_path': '/docs/',
+    'static_url': '/pulsar-compose/_static/',
+}
+
 # Theme options
 html_theme_options = {
-    'canonical_url': '',
+    'canonical_url': 'https://lsalihi.github.io/pulsar-compose/',
     'analytics_id': '',
     'display_version': True,
     'prev_next_buttons_location': 'bottom',
