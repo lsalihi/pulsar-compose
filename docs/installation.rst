@@ -14,6 +14,88 @@ System Requirements
 Installation Methods
 --------------------
 
+Standalone Executable (Recommended)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**No dependencies required - download and run:**
+
+.. code-block:: bash
+
+   # One-line installer (Linux/macOS)
+   curl -fsSL https://raw.githubusercontent.com/lsalihi/pulsar-compose/master/install.sh | bash
+
+   # Manual download
+   # Linux x64
+   wget https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-linux-x64
+   chmod +x pulsar-linux-x64 && sudo mv pulsar-linux-x64 /usr/local/bin/pulsar
+
+   # macOS (Intel/Apple Silicon)
+   wget https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-macos-$(uname -m)
+   chmod +x pulsar-macos-* && sudo mv pulsar-macos-* /usr/local/bin/pulsar
+
+   # Windows (PowerShell)
+   irm https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-windows-x64.exe -OutFile pulsar.exe
+
+Docker Container
+~~~~~~~~~~~~~~~~
+
+**Run without installation using Docker:**
+
+.. code-block:: bash
+
+   # Pull from GitHub Container Registry
+   docker pull ghcr.io/lsalihi/pulsar-compose:latest
+
+   # Quick start
+   docker run --rm ghcr.io/lsalihi/pulsar-compose:latest --help
+
+   # Run a workflow with your files
+   docker run -v $(pwd):/workflows --rm ghcr.io/lsalihi/pulsar-compose:latest \
+     run /workflows/my-workflow.yml --input "Hello world"
+
+   # Docker Compose style commands
+   docker run -v $(pwd):/workflows --rm ghcr.io/lsalihi/pulsar-compose:latest \
+     compose up
+
+   # With persistent configuration
+   docker run -v $(pwd):/workflows -v ~/.pulsar:/root/.pulsar --rm \
+     ghcr.io/lsalihi/pulsar-compose:latest
+
+Package Managers
+~~~~~~~~~~~~~~~~~
+
+**Install using your favorite package manager:**
+
+Homebrew (macOS/Linux):
+
+.. code-block:: bash
+
+   brew install lsalihi/pulsar-compose/pulsar-compose
+
+PyPI (Python 3.9+ required):
+
+.. code-block:: bash
+
+   pip install pulsar-compose
+
+Snap (Linux):
+
+.. code-block:: bash
+
+   sudo snap install pulsar-compose
+
+Chocolatey (Windows):
+
+.. code-block:: bash
+
+   choco install pulsar-compose
+
+Nix (Linux/macOS):
+
+.. code-block:: bash
+
+   nix-env -iA nixpkgs.pulsar-compose
+
 PyPI (Recommended)
 ~~~~~~~~~~~~~~~~~~
 
@@ -37,30 +119,6 @@ If you use Poetry for dependency management:
 .. code-block:: bash
 
    poetry add pulsar-compose
-
-Docker
-~~~~~~
-
-Use the official Docker image:
-
-.. code-block:: bash
-
-   # Pull the image
-   docker pull ghcr.io/lsalihi/pulsar-compose:latest
-
-   # Run a workflow
-   docker run --rm -v $(pwd):/workflows \
-     ghcr.io/lsalihi/pulsar-compose:latest \
-     pulsar run /workflows/my-workflow.yml
-
-Homebrew (macOS)
-~~~~~~~~~~~~~~~~
-
-Install on macOS using Homebrew:
-
-.. code-block:: bash
-
-   brew install pulsar-compose
 
 From Source
 ~~~~~~~~~~~
