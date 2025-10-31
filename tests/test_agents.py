@@ -184,21 +184,22 @@ class TestAnthropicAgent:
     async def test_execute_success(self, anthropic_agent):
         """Test successful Anthropic execution."""
         mock_response = MagicMock()
-        mock_response.completion = "Claude response"
+        mock_response.content = [MagicMock()]
+        mock_response.content[0].text = "Claude response"
         mock_response.stop_reason = "end_turn"
         mock_response.usage = MagicMock()
         mock_response.usage.input_tokens = 10
         mock_response.usage.output_tokens = 20
 
-        with patch.object(anthropic_agent.client.completions, 'create', new_callable=AsyncMock) as mock_create:
+        with patch.object(anthropic_agent.client.messages, 'create', new_callable=AsyncMock) as mock_create:
             mock_create.return_value = mock_response
 
             result = await anthropic_agent.execute("Test prompt", "claude-3")
 
             assert isinstance(result, AgentResult)
             assert result.output == "Claude response"
-            assert result.usage["prompt_tokens"] == 10
-            assert result.usage["completion_tokens"] == 20
+            assert result.usage["input_tokens"] == 10
+            assert result.usage["output_tokens"] == 20
             assert result.model == "claude-3"
             assert result.metadata["provider"] == "anthropic"
 
@@ -206,13 +207,14 @@ class TestAnthropicAgent:
     async def test_execute_with_system_prompt(self, anthropic_agent):
         """Test execution with system prompt."""
         mock_response = MagicMock()
-        mock_response.completion = "System-aware response"
+        mock_response.content = [MagicMock()]
+        mock_response.content[0].text = "System-aware response"
         mock_response.stop_reason = "end_turn"
         mock_response.usage = MagicMock()
         mock_response.usage.input_tokens = 15
         mock_response.usage.output_tokens = 25
 
-        with patch.object(anthropic_agent.client.completions, 'create', new_callable=AsyncMock) as mock_create:
+        with patch.object(anthropic_agent.client.messages, 'create', new_callable=AsyncMock) as mock_create:
             mock_create.return_value = mock_response
 
             result = await anthropic_agent.execute(
@@ -224,7 +226,7 @@ class TestAnthropicAgent:
             assert result.output == "System-aware response"
             mock_create.assert_called_once()
             call_args = mock_create.call_args[1]
-            assert "prompt" in call_args  # completions API uses 'prompt' instead of 'messages'
+            assert "messages" in call_args  # messages API uses 'messages' instead of 'prompt'
 
 
 class TestLocalAgent:

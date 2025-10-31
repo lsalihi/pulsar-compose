@@ -156,19 +156,19 @@ class FileInputProvider(InputProvider):
                         elif line.lower() in ('false', 'no', '0', 'off'):
                             answers[question_key] = False
                         else:
-                            answers[question_key] = line  # Keep as string if unclear
+                            answers[question_key] = line  # type: ignore[assignment] # Keep as string if unclear
                     elif question.type == QuestionType.NUMBER:
                         # Try to convert to number
                         try:
                             # Try int first, then float
                             if '.' in line:
-                                answers[question_key] = float(line)
+                                answers[question_key] = float(line)  # type: ignore[assignment]
                             else:
-                                answers[question_key] = int(line)
+                                answers[question_key] = int(line)  # type: ignore[assignment]
                         except ValueError:
-                            answers[question_key] = line  # Keep as string if not a number
+                            answers[question_key] = line  # type: ignore[assignment] # Keep as string if not a number
                     else:
-                        answers[question_key] = line
+                        answers[question_key] = line  # type: ignore[assignment]
 
         return answers
 
@@ -202,7 +202,7 @@ class FileInputProvider(InputProvider):
 
             # Add comments for clarity
             comments.append(f"// {question.question}")
-            if question.type.value == 'multiple_choice' and question.options:
+            if question.type.value == 'multiple_choice' and question.options is not None:
                 comments.append(f"// Options: {', '.join(question.options)}")
             if question.placeholder:
                 comments.append(f"// {question.placeholder}")
@@ -239,8 +239,9 @@ class FileInputProvider(InputProvider):
             default = self._get_default_value(request.questions[i])
 
             template += f"# {request.questions[i].question}\n"
-            if request.questions[i].type.value == 'multiple_choice' and request.questions[i].options:
-                template += f"# Options: {', '.join(request.questions[i].options)}\n"
+            if request.questions[i].type.value == 'multiple_choice' and request.questions[i].options is not None:
+                options = request.questions[i].options
+                template += f"# Options: {', '.join(options)}\n"  # type: ignore[arg-type]
             if request.questions[i].placeholder:
                 template += f"# {request.questions[i].placeholder}\n"
 
@@ -258,7 +259,7 @@ class FileInputProvider(InputProvider):
 
         for i, question in enumerate(request.questions):
             template += f"{i + 1}. {question.question}\n"
-            if question.type.value == 'multiple_choice' and question.options:
+            if question.type.value == 'multiple_choice' and question.options is not None:
                 template += f"   Options: {', '.join(question.options)}\n"
             if question.placeholder:
                 template += f"   {question.placeholder}\n"

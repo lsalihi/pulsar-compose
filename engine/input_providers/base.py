@@ -80,6 +80,8 @@ class InputProvider(ABC):
 
             # Type-specific validation
             if question.type == QuestionType.MULTIPLE_CHOICE:
+                if question.options is None:
+                    raise ValidationError(question.question, "Multiple choice question must have options")
                 if question.multiple:
                     if not isinstance(answer, list):
                         raise ValidationError(question.question, "Multiple selection expected")
@@ -91,6 +93,8 @@ class InputProvider(ABC):
                         raise ValidationError(question.question, f"Invalid option: {answer}")
 
             elif question.type == QuestionType.NUMBER:
+                if answer is None:
+                    raise ValidationError(question.question, "Number value cannot be None")
                 try:
                     float(answer)
                 except (ValueError, TypeError):
@@ -101,11 +105,14 @@ class InputProvider(ABC):
                     raise ValidationError(question.question, "Must be true or false")
 
             # Custom validation rules
-            if question.validation:
+            if question.validation is not None:
                 self._apply_custom_validation(question, answer)
 
     def _apply_custom_validation(self, question: Question, answer: Any) -> None:
         """Apply custom validation rules."""
+        if question.validation is None:
+            return
+            
         validation = question.validation
 
         if 'min_length' in validation and isinstance(answer, str):
@@ -133,7 +140,7 @@ class InputProvider(ABC):
 class InputProviderFactory:
     """Factory for creating input providers."""
 
-    _providers = {}
+    _providers: Dict[str, type] = {}
 
     @classmethod
     def register(cls, name: str, provider_class):

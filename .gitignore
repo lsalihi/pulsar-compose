@@ -147,10 +147,10 @@ logs/
 # Project specific
 # Ollama models (if downloaded locally)
 ollama/
-# Test artifacts
-test_*.py
-*_test.py
-conftest.py
+# Test artifacts - removed to allow committing test files
+# test_*.py
+# *_test.py
+# conftest.py
 
 # Benchmark results
 .benchmarks/
@@ -178,3 +178,4 @@ __pypackages__/
 idea.md
 executable-specs.md
 logo.png
+ui-specs.md

@@ -1,6 +1,6 @@
 import asyncio
 import aiohttp
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from .base import BaseAgent, AgentResult, AgentConfig
 
@@ -10,7 +10,7 @@ class LocalAgent(BaseAgent):
     def __init__(self, config: AgentConfig):
         self.base_url = config.base_url or "http://localhost:11434"
         self.config = config
-        self.session = None
+        self.session: Optional[aiohttp.ClientSession] = None
 
     async def __aenter__(self):
         self.session = aiohttp.ClientSession()

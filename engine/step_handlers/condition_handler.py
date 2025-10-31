@@ -7,8 +7,11 @@ from engine.results import StepResult
 
 if TYPE_CHECKING:
     from models.state import StateManager
-    from models.workflow import ConditionalStep
+    from models.workflow import ConditionalStep, Step
     from engine.executor import PulsarEngine
+else:
+    class Step:  # type: ignore
+        pass
 
 class ConditionEvaluator:
     """Safe condition evaluator for if statements."""
@@ -38,7 +41,7 @@ class ConditionStepHandler(BaseStepHandler):
         """Check if step is a conditional step."""
         return hasattr(step, 'type') and step.type == "conditional"
 
-    async def execute(self, step: "ConditionalStep") -> StepResult:
+    async def execute(self, step: "Step") -> StepResult:
         """Execute a conditional step."""
         from models.workflow import ConditionalStep
         if not isinstance(step, ConditionalStep):

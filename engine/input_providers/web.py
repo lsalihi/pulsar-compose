@@ -38,7 +38,7 @@ class WebInputProvider(InputProvider):
         session_id = f"session_{int(time.time() * 1000)}_{hash(str(request)) % 10000}"
 
         # Create a future for the response
-        future = asyncio.Future()
+        future: asyncio.Future[InteractionResponse] = asyncio.Future()
         self.pending_requests[session_id] = future
 
         # Store session data

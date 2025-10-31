@@ -10,7 +10,10 @@ from engine.results import StepResult
 
 if TYPE_CHECKING:
     from models.state import StateManager
-    from models.workflow import InteractionStep
+    from models.workflow import InteractionStep, Step
+else:
+    class Step:  # type: ignore
+        pass
 
 
 class InteractionStepHandler(BaseStepHandler):
@@ -41,7 +44,7 @@ class InteractionStepHandler(BaseStepHandler):
         """Check if step is an interaction step."""
         return hasattr(step, 'type') and step.type == "interaction"
 
-    async def execute(self, step: "InteractionStep") -> StepResult:
+    async def execute(self, step: "Step") -> StepResult:
         """Execute an interaction step."""
         from models.workflow import InteractionStep
         if not isinstance(step, InteractionStep):

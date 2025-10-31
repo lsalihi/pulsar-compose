@@ -1,7 +1,7 @@
 import asyncio
 from typing import Dict, Any
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
-from anthropic import AsyncAnthropic, AnthropicError
+from anthropic import AsyncAnthropic
 from .base import BaseAgent, AgentResult, AgentConfig
 
 class AnthropicAgent(BaseAgent):
@@ -16,31 +16,40 @@ class AnthropicAgent(BaseAgent):
     @retry(
         stop=stop_after_attempt(3),
         wait=wait_exponential(multiplier=1, min=4, max=10),
-        retry=retry_if_exception_type((AnthropicError, asyncio.TimeoutError))
+        retry=retry_if_exception_type((Exception, asyncio.TimeoutError))
     )
     async def execute(self, prompt: str, model: str, **parameters) -> AgentResult:
         """Execute Anthropic API call with retry logic."""
         try:
+            # Extract system prompt if provided
+            system = parameters.pop("system", None)
+            
+            # Build messages
+            messages = []
+            if system:
+                messages.append({"role": "system", "content": system})
+            messages.append({"role": "user", "content": prompt})
+            
             # Merge default parameters
             params = {
                 "model": model,
-                "prompt": f"{self.client.HUMAN_PROMPT} {prompt}{self.client.AI_PROMPT}",
-                "max_tokens_to_sample": 4096,
+                "messages": messages,
+                "max_tokens": 4096,
                 "temperature": 0.7,
                 **parameters
             }
 
             response = await asyncio.wait_for(
-                self.client.completions.create(**params),
+                self.client.messages.create(**params),
                 timeout=self.config.timeout
             )
 
-            output = response.completion
+            output = response.content[0].text if response.content else ""
 
             usage = {
-                "prompt_tokens": response.usage.input_tokens if hasattr(response.usage, 'input_tokens') else 0,
-                "completion_tokens": response.usage.output_tokens if hasattr(response.usage, 'output_tokens') else 0,
-                "total_tokens": (response.usage.input_tokens + response.usage.output_tokens) if hasattr(response.usage, 'input_tokens') and hasattr(response.usage, 'output_tokens') else 0
+                "input_tokens": response.usage.input_tokens,
+                "output_tokens": response.usage.output_tokens,
+                "total_tokens": response.usage.input_tokens + response.usage.output_tokens
             }
 
             cost = self.estimate_cost(usage, model)
@@ -50,18 +59,14 @@ class AnthropicAgent(BaseAgent):
                 usage=usage,
                 model=model,
                 metadata={
-                    "stop_reason": response.stop_reason if hasattr(response, 'stop_reason') else "unknown",
+                    "stop_reason": response.stop_reason,
                     "provider": "anthropic"
                 },
                 cost=cost
             )
 
-        except AnthropicError as e:
-            raise RuntimeError(f"Anthropic API error: {e}")
-        except asyncio.TimeoutError:
-            raise RuntimeError("Anthropic API request timed out")
         except Exception as e:
-            raise RuntimeError(f"Unexpected error in Anthropic agent: {e}")
+            raise RuntimeError(f"Anthropic API error: {e}")
 
     def estimate_cost(self, usage: Dict[str, int], model: str) -> float:
         """Estimate cost in USD based on token usage."""

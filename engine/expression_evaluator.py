@@ -7,7 +7,7 @@ Supports template variables, string operations, membership tests, and type check
 import re
 import ast
 import operator
-from typing import Any, Dict, List, Union, Callable
+from typing import Any, Dict, List, Union, Callable, Optional
 from dataclasses import dataclass
 from enum import Enum
 
@@ -57,7 +57,7 @@ class ExpressionParser:
     }
 
     # Supported functions
-    FUNCTIONS = {
+    FUNCTIONS: Dict[str, Callable[..., Any]] = {
         'contains': lambda s, substr: substr in str(s),
         'startsWith': lambda s, prefix: str(s).startswith(str(prefix)),
         'endsWith': lambda s, suffix: str(s).endswith(str(suffix)),
@@ -210,7 +210,7 @@ class ExpressionParser:
             return self.tokens[self.current_token_index]
         return self.tokens[-1]  # EOF token
 
-    def _consume_token(self, expected_type: TokenType = None) -> Token:
+    def _consume_token(self, expected_type: Optional[TokenType] = None) -> Token:
         """Consume and return current token."""
         token = self._current_token()
         if expected_type and token.type != expected_type:
@@ -337,7 +337,7 @@ class ExpressionParser:
         else:
             raise ExpressionError(f"Unexpected token: {token.type.value} '{token.value}' at position {token.position}")
 
-    def _parse_array_access(self, variable_node: 'VariableNode') -> 'ExpressionNode':
+    def _parse_array_access(self, node: 'ExpressionNode') -> 'ExpressionNode':
         """Parse array access after a variable (e.g., var[0])."""
         if self._current_token().type == TokenType.PARENTHESIS and self._current_token().value == '[':
             self._consume_token()  # consume '['
@@ -345,11 +345,11 @@ class ExpressionParser:
             self._consume_token(TokenType.PARENTHESIS)  # consume ']'
             
             # Create a special node for array access
-            array_access_node = ArrayAccessNode(variable_node, index_expr)
+            array_access_node = ArrayAccessNode(node, index_expr)
             # Allow chaining: var[0][1]
             return self._parse_array_access(array_access_node)
         else:
-            return variable_node
+            return node
 
     def _parse_array_literal(self) -> 'ArrayLiteralNode':
         """Parse array literals like [1, 2, 'hello']."""

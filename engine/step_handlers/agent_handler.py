@@ -6,8 +6,12 @@ from engine.results import StepResult
 
 if TYPE_CHECKING:
     from models.state import StateManager
-    from models.workflow import AgentStep, Agent
+    from models.workflow import AgentStep, Agent, Step
     from agents import AgentFactory
+else:
+    # Define a runtime placeholder to satisfy flake8 name resolution
+    class Step:  # type: ignore
+        pass
 
 class AgentStepHandler(BaseStepHandler):
     """Handler for executing agent steps."""
@@ -26,7 +30,7 @@ class AgentStepHandler(BaseStepHandler):
         wait=wait_exponential(multiplier=1, min=4, max=10),
         retry=retry_if_exception_type((RuntimeError, asyncio.TimeoutError))
     )
-    async def execute(self, step: "AgentStep") -> "StepResult":
+    async def execute(self, step: "Step") -> "StepResult":
         """Execute an agent step."""
         from models.workflow import AgentStep
         if not isinstance(step, AgentStep):

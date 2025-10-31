@@ -72,8 +72,8 @@ def run(ctx, workflow_file: str, input: Optional[str], watch: bool, dry_run: boo
             click.echo("📋 Execution Plan:")
             # Show step-by-step plan
             for i, step in enumerate(workflow.workflow, 1):
-                step_type = step.get('type', 'unknown')
-                step_name = step.get('step', f'step_{i}')
+                step_type = getattr(step, 'type', 'unknown')
+                step_name = getattr(step, 'step', f'step_{i}')
                 click.echo(f"  {i}. {step_type}: {step_name}")
             return
 
