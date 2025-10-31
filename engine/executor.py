@@ -124,17 +124,20 @@ class PulsarEngine:
         # Note: This is a sync method, so it returns the last known state
         # For real-time state, use the async state_manager methods
         try:
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                # If event loop is running, we can't call async method
-                # Return a copy of the state if available
-                return getattr(self.state_manager, '_state', {}).copy()
-            else:
-                # Create a new task to get state
-                return loop.run_until_complete(self.state_manager.get_state_snapshot())
-        except RuntimeError:
-            # No event loop
+            # If there's a running loop, don't attempt to await; return a shallow copy
+            asyncio.get_running_loop()
             return getattr(self.state_manager, '_state', {}).copy()
+        except RuntimeError:
+            # No running loop: it's safe to synchronously run the coroutine to get a snapshot
+            try:
+                return asyncio.run(self.state_manager.get_state_snapshot())
+            except RuntimeError:
+                # Fallback for environments where asyncio.run isn't allowed (rare)
+                loop = asyncio.new_event_loop()
+                try:
+                    return loop.run_until_complete(self.state_manager.get_state_snapshot())
+                finally:
+                    loop.close()
 
     async def get_current_state_async(self) -> Dict[str, Any]:
         """Get current execution state asynchronously."""

@@ -10,6 +10,8 @@ from .base import InputProvider, InteractionRequest, InteractionResponse, Valida
 
 class TestInputProvider(InputProvider):
     """Input provider for automated testing with predefined responses."""
+    # Prevent pytest from attempting to collect this as a test class
+    __test__ = False
 
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
