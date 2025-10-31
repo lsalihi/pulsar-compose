@@ -20,8 +20,8 @@ A declarative workflow engine for orchestrating AI agents in YAML-defined workfl
 **No dependencies required - download and run:**
 
 ```bash
-# One-line installer (Linux/macOS)
-curl -fsSL https://raw.githubusercontent.com/lsalihi/pulsar-compose/main/install.sh | bash
+# Or use the one-line installer (Linux/macOS):
+curl -fsSL https://raw.githubusercontent.com/lsalihi/pulsar-compose/master/install.sh | bash
 
 # Manual download
 # Linux x64

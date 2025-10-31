@@ -214,7 +214,7 @@ jobs:
         echo "irm https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-windows-x64.exe -OutFile pulsar.exe"
         echo ""
         echo "# Or use the one-line installer (Linux/macOS):"
-        echo "curl -fsSL https://raw.githubusercontent.com/lsalihi/pulsar-compose/main/install.sh | bash"
+        echo "curl -fsSL https://raw.githubusercontent.com/lsalihi/pulsar-compose/master/install.sh | bash"
         echo "\`\`\`"
         echo ""
         echo "#### Option 2: PyPI Package"
