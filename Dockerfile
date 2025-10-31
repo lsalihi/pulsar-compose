@@ -19,20 +19,11 @@ RUN useradd --create-home --shell /bin/bash pulsar
 # Set work directory
 WORKDIR /app
 
-# Copy dependency files
-COPY pyproject.toml poetry.lock ./
-
-# Install Poetry
-RUN pip install poetry
-
-# Configure poetry: Don't create virtual environment, install dependencies
-RUN poetry config virtualenvs.create false
+# Copy source code first
+COPY . .
 
 # Install Python dependencies
-RUN poetry install --only=main --no-dev
-
-# Copy source code
-COPY . .
+RUN pip install --no-cache-dir -e .
 
 # Change ownership to non-root user
 RUN chown -R pulsar:pulsar /app

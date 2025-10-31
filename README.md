@@ -16,12 +16,56 @@ A declarative workflow engine for orchestrating AI agents in YAML-defined workfl
 
 ## Installation
 
-### Prerequisites
+### Option 1: Standalone Executable (Recommended)
+
+Download and run the standalone executable - no dependencies required:
+
+```bash
+# Download and run the installer
+curl -fsSL https://raw.githubusercontent.com/lsalihi/pulsar-compose/main/install-executable.sh | bash
+
+# Or download manually and run
+wget https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-compose-linux-x64.tar.gz
+tar -xzf pulsar-compose-linux-x64.tar.gz
+sudo cp -r pulsar /usr/local/bin/
+sudo chmod +x /usr/local/bin/pulsar
+```
+
+**Available executables:**
+- Linux x64: `pulsar-compose-linux-x64.tar.gz`
+- macOS x64: `pulsar-compose-macos-x64.tar.gz`
+- macOS ARM64: `pulsar-compose-macos-arm64.tar.gz`
+
+### Option 2: Docker Container
+
+Run Pulsar Compose in a container:
+
+```bash
+# Pull and run
+docker run -it --rm lsalihi/pulsar-compose:latest pulsar --help
+
+# Mount workflows
+docker run -v $(pwd):/workflows -it --rm lsalihi/pulsar-compose:latest pulsar run /workflows/workflow.yml
+```
+
+### Option 3: PyPI Package
+
+Install from PyPI (requires Python 3.9+):
+
+```bash
+pip install pulsar-compose
+```
+
+### Option 4: From Source
+
+For development or custom builds:
+
+#### Prerequisites
 - Python 3.9+
 - Poetry (for dependency management)
 - Ollama (for local AI models, optional)
 
-### Setup
+#### Setup
 ```bash
 # Clone and install
 git clone https://github.com/lsalihi/pulsar-compose.git

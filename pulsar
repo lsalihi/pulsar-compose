@@ -1,0 +1,13 @@
+#!/bin/bash
+# Pulsar CLI wrapper script
+# This script allows running the pulsar command from anywhere
+
+# Find the actual project directory by resolving symlinks
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+PROJECT_DIR="$(dirname "$SCRIPT_PATH")"
+
+# Change to the project directory
+cd "$PROJECT_DIR"
+
+# Run the CLI through poetry
+exec poetry run python -m cli.main "$@"
