@@ -2,6 +2,8 @@
 
 A declarative workflow engine for orchestrating AI agents in YAML-defined workflows. Supports multi-provider AI models with conditional logic, template rendering, and async execution.
 
+📖 **[Complete Documentation](https://lsalihi.github.io/pulsar-compose/)**
+
 ## Features
 
 - **YAML-based Workflows**: Define complex AI agent orchestrations using simple YAML syntax
