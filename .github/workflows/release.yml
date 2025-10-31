@@ -55,6 +55,7 @@ jobs:
         pyinstaller build.spec
 
     - name: Prepare executable for distribution
+      shell: bash
       run: |
         cd dist
         if [ "${{ matrix.os }}" == "windows-latest" ]; then
@@ -72,6 +73,7 @@ jobs:
         fi
 
     - name: Calculate SHA256 hashes
+      shell: bash
       run: |
         cd dist
         if [ "${{ matrix.os }}" == "windows-latest" ]; then
@@ -137,6 +139,7 @@ jobs:
         path: artifacts/
 
     - name: Generate SHA256 summary
+      shell: bash
       run: |
         echo "## SHA256 Hashes for Homebrew Formula" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
@@ -169,6 +172,7 @@ jobs:
 
     - name: Get tag name
       id: tag
+      shell: bash
       run: |
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
           echo "tag=${{ inputs.tag_name }}" >> $GITHUB_OUTPUT
