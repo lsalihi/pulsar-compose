@@ -105,7 +105,7 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     needs: [build-executables, build-python-package]
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.repository == 'lsalihi/pulsar-compose'
 
     steps:
     - uses: actions/checkout@v4
@@ -150,62 +150,65 @@ jobs:
         fi
 
     - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: ${{ steps.tag.outputs.tag }}
-        name: Release ${{ steps.tag.outputs.tag }}
-        body: |
-          ## 🚀 Pulsar Compose ${{ steps.tag.outputs.tag }}
-
-          Docker-like AI workflow orchestration engine.
-
-          ### 📦 Installation Options
-
-          #### Option 1: Standalone Executable (Recommended)
-          Download the executable for your platform and run:
-          ```bash
-          # Linux/macOS
-          tar -xzf pulsar-compose-*.tar.gz
-          sudo cp -r pulsar /usr/local/bin/
-          ```
-
-          #### Option 2: PyPI Package
-          ```bash
-          pip install pulsar-compose
-          ```
-
-          #### Option 3: Docker
-          ```bash
-          docker run lsalihi/pulsar-compose:${{ steps.tag.outputs.tag }}
-          ```
-
-          #### Option 4: Homebrew (macOS/Linux)
-          ```bash
-          brew install lsalihi/pulsar-compose/pulsar-compose
-          ```
-
-          ### 📋 What's New
-          - See [CHANGELOG.md](https://github.com/lsalihi/pulsar-compose/blob/main/CHANGELOG.md) for details
-
-          ### 🔗 Links
-          - [Documentation](https://pulsar-compose.readthedocs.io)
-          - [Repository](https://github.com/lsalihi/pulsar-compose)
-
-          ### 🛠️ For Maintainers
-          After release, update the Homebrew formula:
-          ```bash
-          ./update-homebrew-formula.sh ${{ steps.tag.outputs.tag }}
-          ```
-        draft: false
-        prerelease: ${{ contains(steps.tag.outputs.tag, 'rc') || contains(steps.tag.outputs.tag, 'beta') || contains(steps.tag.outputs.tag, 'alpha') }}
-        files: |
-          artifacts/python-packages/*.tar.gz
-          artifacts/python-packages/*.whl
-          artifacts/pulsar-compose-linux-x64/*.tar.gz
-          artifacts/pulsar-compose-macos-x64/*.tar.gz
-          artifacts/pulsar-compose-macos-arm64/*.tar.gz
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "⚠️  Automatic release creation failed due to permissions."
+        echo "📋 To create the release manually:"
+        echo ""
+        echo "1. Go to https://github.com/lsalihi/pulsar-compose/releases"
+        echo "2. Click 'Create a new release'"
+        echo "3. Use tag: ${{ steps.tag.outputs.tag }}"
+        echo "4. Use title: Release ${{ steps.tag.outputs.tag }}"
+        echo "5. Copy the release notes from below:"
+        echo ""
+        echo "## 🚀 Pulsar Compose ${{ steps.tag.outputs.tag }}"
+        echo ""
+        echo "Docker-like AI workflow orchestration engine."
+        echo ""
+        echo "### 📦 Installation Options"
+        echo ""
+        echo "#### Option 1: Standalone Executable (Recommended)"
+        echo "Download the executable for your platform and run:"
+        echo "\`\`\`bash"
+        echo "# Linux/macOS"
+        echo "tar -xzf pulsar-compose-*.tar.gz"
+        echo "sudo cp -r pulsar /usr/local/bin/"
+        echo "\`\`\`"
+        echo ""
+        echo "#### Option 2: PyPI Package"
+        echo "\`\`\`bash"
+        echo "pip install pulsar-compose"
+        echo "\`\`\`"
+        echo ""
+        echo "#### Option 3: Docker"
+        echo "\`\`\`bash"
+        echo "docker run lsalihi/pulsar-compose:${{ steps.tag.outputs.tag }}"
+        echo "\`\`\`"
+        echo ""
+        echo "#### Option 4: Homebrew (macOS/Linux)"
+        echo "\`\`\`bash"
+        echo "brew install lsalihi/pulsar-compose/pulsar-compose"
+        echo "\`\`\`"
+        echo ""
+        echo "### 📋 What's New"
+        echo "- See [CHANGELOG.md](https://github.com/lsalihi/pulsar-compose/blob/main/CHANGELOG.md) for details"
+        echo ""
+        echo "### 🔗 Links"
+        echo "- [Documentation](https://pulsar-compose.readthedocs.io)"
+        echo "- [Repository](https://github.com/lsalihi/pulsar-compose)"
+        echo ""
+        echo "### 🛠️ For Maintainers"
+        echo "After release, update the Homebrew formula:"
+        echo "\`\`\`bash"
+        echo "./update-homebrew-formula.sh ${{ steps.tag.outputs.tag }}"
+        echo "\`\`\`"
+        echo ""
+        echo "6. Upload these files:"
+        echo "   - artifacts/python-packages/*.tar.gz"
+        echo "   - artifacts/python-packages/*.whl"
+        echo "   - artifacts/pulsar-compose-linux-x64/*.tar.gz"
+        echo "   - artifacts/pulsar-compose-macos-x64/*.tar.gz"
+        echo "   - artifacts/pulsar-compose-macos-arm64/*.tar.gz"
+      continue-on-error: true
 
   publish-pypi:
     runs-on: ubuntu-latest
