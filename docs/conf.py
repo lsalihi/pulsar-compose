@@ -82,6 +82,7 @@ napoleon_use_rtype = True
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_css_files = ['custom.css']
+html_baseurl = '/pulsar-compose/'
 
 # Theme options
 html_theme_options = {
