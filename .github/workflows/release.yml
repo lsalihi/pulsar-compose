@@ -35,7 +35,7 @@ jobs:
         python-version: "3.11"
 
     - name: Cache pip dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
@@ -51,6 +51,12 @@ jobs:
       run: |
         pyinstaller build.spec
 
+    - name: Create distribution archive
+      run: |
+        cd dist
+        mv pulsar pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}
+        tar -czf pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}.tar.gz pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}/
+
     - name: Calculate SHA256 hashes
       run: |
         cd dist
@@ -59,7 +65,7 @@ jobs:
         echo "SHA256 hash: $(sha256sum pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}.tar.gz | cut -d' ' -f1)" >> $GITHUB_STEP_SUMMARY
 
     - name: Upload executable artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}
         path: dist/pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}.tar.gz
@@ -89,7 +95,7 @@ jobs:
         check-wheel-contents dist/*.whl
 
     - name: Upload Python package artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: python-packages
         path: |
@@ -103,6 +109,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts/
 
     - name: Generate SHA256 summary
       run: |
