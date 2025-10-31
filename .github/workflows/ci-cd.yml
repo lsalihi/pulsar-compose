@@ -114,11 +114,11 @@ jobs:
 
     - name: Run integration tests
       run: |
-        pytest tests/test_integration.py -v --tb=short
+        pytest tests/test_integration.py -v --tb=short --override-ini="addopts=-v --tb=short"
 
     - name: Run end-to-end tests
       run: |
-        pytest tests/test_e2e.py -v --tb=short
+        pytest tests/test_e2e.py -v --tb=short --override-ini="addopts=-v --tb=short"
 
   security-scan:
     runs-on: ubuntu-latest
