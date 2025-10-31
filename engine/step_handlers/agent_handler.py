@@ -2,6 +2,7 @@ import asyncio
 from typing import TYPE_CHECKING, Dict, Any
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from engine.step_handlers.base import BaseStepHandler
+from engine.results import StepResult
 
 if TYPE_CHECKING:
     from models.state import StateManager
