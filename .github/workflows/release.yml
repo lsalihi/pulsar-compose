@@ -25,6 +25,9 @@ jobs:
           - os: macos-latest
             target: macos
             arch: arm64
+          - os: windows-latest
+            target: windows
+            arch: x64
 
     steps:
     - uses: actions/checkout@v4
@@ -51,24 +54,36 @@ jobs:
       run: |
         pyinstaller build.spec
 
-    - name: Create distribution archive
+    - name: Prepare executable for distribution
       run: |
         cd dist
-        mv pulsar pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}
-        tar -czf pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}.tar.gz pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}/
+        if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          mv pulsar pulsar.exe
+          EXECUTABLE_NAME="pulsar.exe"
+        else
+          EXECUTABLE_NAME="pulsar"
+        fi
+        # Keep executable as-is for direct download
 
     - name: Calculate SHA256 hashes
       run: |
         cd dist
+        if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          EXECUTABLE_NAME="pulsar.exe"
+        else
+          EXECUTABLE_NAME="pulsar"
+        fi
         echo "SHA256 for ${{ matrix.target }}-${{ matrix.arch }}:"
-        sha256sum pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}.tar.gz
-        echo "SHA256 hash: $(sha256sum pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}.tar.gz | cut -d' ' -f1)" >> $GITHUB_STEP_SUMMARY
+        sha256sum "$EXECUTABLE_NAME"
+        echo "SHA256 hash: $(sha256sum "$EXECUTABLE_NAME" | cut -d' ' -f1)" >> $GITHUB_STEP_SUMMARY
 
     - name: Upload executable artifact
       uses: actions/upload-artifact@v4
       with:
         name: pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}
-        path: dist/pulsar-compose-${{ matrix.target }}-${{ matrix.arch }}.tar.gz
+        path: |
+          dist/pulsar
+          dist/pulsar.exe
 
   build-python-package:
     runs-on: ubuntu-latest
@@ -121,23 +136,29 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "Update these values in pulsar.rb:" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        
+
         # Linux x64
-        if [ -f "artifacts/pulsar-compose-linux-x64/pulsar-compose-linux-x64.tar.gz" ]; then
-          LINUX_SHA=$(sha256sum artifacts/pulsar-compose-linux-x64/pulsar-compose-linux-x64.tar.gz | cut -d' ' -f1)
+        if [ -f "artifacts/pulsar-compose-linux-x64/pulsar" ]; then
+          LINUX_SHA=$(sha256sum artifacts/pulsar-compose-linux-x64/pulsar | cut -d' ' -f1)
           echo "- Linux x64: \`$LINUX_SHA\`" >> $GITHUB_STEP_SUMMARY
         fi
-        
+
         # macOS x64
-        if [ -f "artifacts/pulsar-compose-macos-x64/pulsar-compose-macos-x64.tar.gz" ]; then
-          MACOS_X64_SHA=$(sha256sum artifacts/pulsar-compose-macos-x64/pulsar-compose-macos-x64.tar.gz | cut -d' ' -f1)
+        if [ -f "artifacts/pulsar-compose-macos-x64/pulsar" ]; then
+          MACOS_X64_SHA=$(sha256sum artifacts/pulsar-compose-macos-x64/pulsar | cut -d' ' -f1)
           echo "- macOS x64: \`$MACOS_X64_SHA\`" >> $GITHUB_STEP_SUMMARY
         fi
-        
+
         # macOS ARM64
-        if [ -f "artifacts/pulsar-compose-macos-arm64/pulsar-compose-macos-arm64.tar.gz" ]; then
-          MACOS_ARM64_SHA=$(sha256sum artifacts/pulsar-compose-macos-arm64/pulsar-compose-macos-arm64.tar.gz | cut -d' ' -f1)
+        if [ -f "artifacts/pulsar-compose-macos-arm64/pulsar" ]; then
+          MACOS_ARM64_SHA=$(sha256sum artifacts/pulsar-compose-macos-arm64/pulsar | cut -d' ' -f1)
           echo "- macOS ARM64: \`$MACOS_ARM64_SHA\`" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        # Windows x64
+        if [ -f "artifacts/pulsar-compose-windows-x64/pulsar.exe" ]; then
+          WINDOWS_SHA=$(sha256sum artifacts/pulsar-compose-windows-x64/pulsar.exe | cut -d' ' -f1)
+          echo "- Windows x64: \`$WINDOWS_SHA\`" >> $GITHUB_STEP_SUMMARY
         fi
 
     - name: Get tag name
@@ -170,8 +191,20 @@ jobs:
         echo "Download the executable for your platform and run:"
         echo "\`\`\`bash"
         echo "# Linux/macOS"
-        echo "tar -xzf pulsar-compose-*.tar.gz"
-        echo "sudo cp -r pulsar /usr/local/bin/"
+        echo "wget https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-linux-x64"
+        echo "chmod +x pulsar-linux-x64"
+        echo "sudo mv pulsar-linux-x64 /usr/local/bin/pulsar"
+        echo ""
+        echo "# macOS (Apple Silicon)"
+        echo "wget https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-macos-arm64"
+        echo "chmod +x pulsar-macos-arm64"
+        echo "sudo mv pulsar-macos-arm64 /usr/local/bin/pulsar"
+        echo ""
+        echo "# Windows (PowerShell)"
+        echo "irm https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-windows-x64.exe -OutFile pulsar.exe"
+        echo ""
+        echo "# Or use the one-line installer (Linux/macOS):"
+        echo "curl -fsSL https://raw.githubusercontent.com/lsalihi/pulsar-compose/main/install.sh | bash"
         echo "\`\`\`"
         echo ""
         echo "#### Option 2: PyPI Package"
@@ -205,9 +238,10 @@ jobs:
         echo "6. Upload these files:"
         echo "   - artifacts/python-packages/*.tar.gz"
         echo "   - artifacts/python-packages/*.whl"
-        echo "   - artifacts/pulsar-compose-linux-x64/*.tar.gz"
-        echo "   - artifacts/pulsar-compose-macos-x64/*.tar.gz"
-        echo "   - artifacts/pulsar-compose-macos-arm64/*.tar.gz"
+        echo "   - artifacts/pulsar-compose-linux-x64/pulsar (rename to pulsar-linux-x64)"
+        echo "   - artifacts/pulsar-compose-macos-x64/pulsar (rename to pulsar-macos-x64)"
+        echo "   - artifacts/pulsar-compose-macos-arm64/pulsar (rename to pulsar-macos-arm64)"
+        echo "   - artifacts/pulsar-compose-windows-x64/pulsar.exe (rename to pulsar-windows-x64.exe)"
       continue-on-error: true
 
   publish-pypi:

@@ -16,65 +16,79 @@ A declarative workflow engine for orchestrating AI agents in YAML-defined workfl
 
 ## Installation
 
-### Option 1: Standalone Executable (Recommended)
-
-Download and run the standalone executable - no dependencies required:
+### 🚀 Recommended: Standalone Executable
+**No dependencies required - download and run:**
 
 ```bash
-# Download and run the installer
-curl -fsSL https://raw.githubusercontent.com/lsalihi/pulsar-compose/main/install-executable.sh | bash
+# One-line installer (Linux/macOS)
+curl -fsSL https://raw.githubusercontent.com/lsalihi/pulsar-compose/main/install.sh | bash
 
-# Or download manually and run
-wget https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-compose-linux-x64.tar.gz
-tar -xzf pulsar-compose-linux-x64.tar.gz
-sudo cp -r pulsar /usr/local/bin/
-sudo chmod +x /usr/local/bin/pulsar
+# Manual download
+# Linux x64
+wget https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-linux-x64
+chmod +x pulsar-linux-x64 && sudo mv pulsar-linux-x64 /usr/local/bin/pulsar
+
+# macOS (Intel/Apple Silicon)
+wget https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-macos-$(uname -m)
+chmod +x pulsar-macos-* && sudo mv pulsar-macos-* /usr/local/bin/pulsar
+
+# Windows (PowerShell)
+irm https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-windows-x64.exe -OutFile pulsar.exe
 ```
 
-**Available executables:**
-- Linux x64: `pulsar-compose-linux-x64.tar.gz`
-- macOS x64: `pulsar-compose-macos-x64.tar.gz`
-- macOS ARM64: `pulsar-compose-macos-arm64.tar.gz`
-
-### Option 2: Docker Container
-
-Run Pulsar Compose in a container:
+### 🐳 Docker Container
+**Run without installation:**
 
 ```bash
-# Pull and run
+# Quick start
 docker run -it --rm lsalihi/pulsar-compose:latest pulsar --help
 
-# Mount workflows
-docker run -v $(pwd):/workflows -it --rm lsalihi/pulsar-compose:latest pulsar run /workflows/workflow.yml
+# With your workflows
+docker run -v $(pwd):/workflows -it --rm lsalihi/pulsar-compose:latest pulsar run /workflows/my-workflow.yml
+
+# Docker Compose style
+docker run -v $(pwd):/workflows -it --rm lsalihi/pulsar-compose:latest pulsar compose up
+
+# Persistent configuration
+docker run -v $(pwd):/workflows -v ~/.pulsar:/root/.pulsar -it --rm lsalihi/pulsar-compose:latest
 ```
 
-### Option 3: PyPI Package
-
-Install from PyPI (requires Python 3.9+):
+### 📦 Package Managers
+**Install using your favorite package manager:**
 
 ```bash
+# Homebrew (macOS/Linux)
+brew install lsalihi/pulsar-compose/pulsar-compose
+
+# PyPI (Python 3.9+ required)
 pip install pulsar-compose
+
+# Snap (Linux)
+sudo snap install pulsar-compose
+
+# Chocolatey (Windows)
+choco install pulsar-compose
+
+# Nix (Linux/macOS)
+nix-env -iA nixpkgs.pulsar-compose
 ```
 
-### Option 4: From Source
+### 🔨 From Source
+**For development or custom builds:**
 
-For development or custom builds:
-
-#### Prerequisites
-- Python 3.9+
-- Poetry (for dependency management)
-- Ollama (for local AI models, optional)
-
-#### Setup
 ```bash
-# Clone and install
 git clone https://github.com/lsalihi/pulsar-compose.git
 cd pulsar-compose
-poetry install
+poetry install  # or: pip install -e .
+poetry run pulsar --help
+```
 
-# Install Ollama (optional, for local models)
-curl -fsSL https://ollama.ai/install.sh | sh
-ollama pull llama2  # or your preferred model
+### ⚡ Verification
+**After installation, verify it works:**
+
+```bash
+pulsar --version
+pulsar --help
 ```
 
 ## Quick Start

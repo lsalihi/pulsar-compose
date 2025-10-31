@@ -89,7 +89,7 @@ def run(ctx, workflow_file: str, input: Optional[str], watch: bool, dry_run: boo
         result = asyncio.run(execute_workflow())
 
         click.echo("✅ Workflow completed successfully!")
-        click.echo(f"📊 Results saved to: {result.output_path}")
+        # Results are stored in memory - no output file generated
 
     except Exception as e:
         click.echo(f"❌ Error: {e}", err=True)
