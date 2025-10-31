@@ -10,18 +10,24 @@ class StateManager:
     def __init__(self, initial_state: Optional[Dict[str, Any]] = None):
         self._state: Dict[str, Any] = initial_state or {}
         self._history: List[Dict[str, Any]] = []
-        self._lock = asyncio.Lock()
+        self._lock: Optional[asyncio.Lock] = None
         self._renderer = TemplateRenderer()
         self._render_depth = 0  # Prevent infinite recursion in templates
 
+    async def _get_lock(self) -> asyncio.Lock:
+        """Get or create the asyncio lock lazily."""
+        if self._lock is None:
+            self._lock = asyncio.Lock()
+        return self._lock
+
     async def set(self, key: str, value: Any) -> None:
         """Set a value in the state using dot notation for nested access."""
-        async with self._lock:
+        async with await self._get_lock():
             self._set_nested(self._state, key, value)
 
     async def get(self, key: str, default: Any = None) -> Any:
         """Get a value from the state using dot notation for nested access."""
-        async with self._lock:
+        async with await self._get_lock():
             return self._get_nested(self._state, key, default)
 
     async def render_template(self, template: str) -> str:
@@ -40,7 +46,7 @@ class StateManager:
 
     async def update_from_agent_output(self, step_name: str, output: Any) -> None:
         """Update state with agent output and record in execution history."""
-        async with self._lock:
+        async with await self._get_lock():
             self._set_nested(self._state, step_name, output)
             self._history.append({
                 "step": step_name,
@@ -50,12 +56,12 @@ class StateManager:
 
     async def get_execution_history(self) -> List[Dict[str, Any]]:
         """Get the execution history of all steps."""
-        async with self._lock:
+        async with await self._get_lock():
             return self._history.copy()
 
     async def get_state_snapshot(self) -> Dict[str, Any]:
         """Get a deep copy of the current state."""
-        async with self._lock:
+        async with await self._get_lock():
             return self._deep_copy(self._state)
 
     def _set_nested(self, data: Dict[str, Any], key: str, value: Any) -> None:
