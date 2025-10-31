@@ -49,7 +49,11 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        pytest --cov=agents --cov=engine --cov=models --cov=cli --cov-report=xml --cov-report=html --cov-report=term-missing --cov-fail-under=85
+        pwd
+        ls -la tests/
+        python -c "import sys; print(sys.path)"
+        python -m pytest tests/ --collect-only -q | head -5
+        python -m pytest tests/ --cov=agents --cov=engine --cov=models --cov=cli --cov-report=xml --cov-report=html --cov-report=term-missing --cov-fail-under=85
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
