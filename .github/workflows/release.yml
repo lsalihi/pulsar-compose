@@ -58,12 +58,18 @@ jobs:
       run: |
         cd dist
         if [ "${{ matrix.os }}" == "windows-latest" ]; then
-          mv pulsar pulsar.exe
+          # On Windows, PyInstaller creates pulsar.exe
           EXECUTABLE_NAME="pulsar.exe"
         else
+          # On Linux/macOS, PyInstaller creates pulsar
           EXECUTABLE_NAME="pulsar"
         fi
-        # Keep executable as-is for direct download
+        # Ensure the executable exists and is a file
+        if [ ! -f "$EXECUTABLE_NAME" ]; then
+          echo "Error: Executable $EXECUTABLE_NAME not found in dist/"
+          ls -la
+          exit 1
+        fi
 
     - name: Calculate SHA256 hashes
       run: |
