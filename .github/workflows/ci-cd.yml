@@ -38,15 +38,15 @@ jobs:
 
     - name: Run linting
       run: |
-        # Run flake8 for style checking
+        # Run flake8 for style checking (only Python packages)
         pip install flake8
-        flake8 pulsar --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 pulsar --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 agents engine cli models --count --select=E9,F63,F7,F82 --show-source --statistics --exclude .venv,dist,build,htmlcov,docs,examples
+        flake8 agents engine cli models --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude .venv,dist,build,htmlcov,docs,examples
 
     - name: Run type checking
       run: |
         pip install mypy
-        mypy pulsar --ignore-missing-imports
+        mypy agents engine cli models --ignore-missing-imports
 
     - name: Run tests with coverage
       run: |
