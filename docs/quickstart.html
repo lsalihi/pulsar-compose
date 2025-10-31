@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start Guide &mdash; Pulsar 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="Pulsar Workflow Engine Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Pulsar
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#your-first-workflow">Your First Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-agent-workflow">Multi-Agent Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conditional-workflows">Conditional Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-templates">Using Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#local-ai-models">Local AI Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/workflows.html">Workflow Fundamentals</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#core-classes">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#agent-system">Agent System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#cli-interface">CLI Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#input-providers">Input Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#step-handlers">Step Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-models">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-0">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#type-definitions">Type Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#constants">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#environment-variables">Environment Variables</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#system-overview">System Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#core-principles">Core Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#component-architecture">Component Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#step-execution-flow">Step Execution Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#data-flow">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#performance-considerations">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#security-architecture">Security Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#deployment-patterns">Deployment Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#monitoring-and-observability">Monitoring and Observability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#future-extensions">Future Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-setup">Development Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#project-structure">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-workflow">Development Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#adding-new-features">Adding New Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#release-process">Release Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#getting-help">Getting Help</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pulsar</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start-guide">
+<h1>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Link to this heading"></a></h1>
+<p>This guide will get you up and running with Pulsar in under 10 minutes.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>Install Pulsar using pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pulsar-compose
+</pre></div>
+</div>
+<p>Or using Poetry:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>add<span class="w"> </span>pulsar-compose
+</pre></div>
+</div>
+<p>For local AI models, install Ollama:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Ollama</span>
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://ollama.ai/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+
+<span class="c1"># Pull a model</span>
+ollama<span class="w"> </span>pull<span class="w"> </span>llama2
+</pre></div>
+</div>
+</section>
+<section id="your-first-workflow">
+<h2>Your First Workflow<a class="headerlink" href="#your-first-workflow" title="Link to this heading"></a></h2>
+<p>Create a file called <code class="docutils literal notranslate"><span class="pre">hello_world.yml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.1&quot;</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello</span><span class="nv"> </span><span class="s">World</span><span class="nv"> </span><span class="s">Workflow&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A</span><span class="nv"> </span><span class="s">simple</span><span class="nv"> </span><span class="s">workflow</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">greets</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">user&quot;</span>
+
+<span class="nt">agents</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">greeter</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-4&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">friendly</span><span class="nv"> </span><span class="s">assistant&quot;</span>
+
+<span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;greet&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;greeter&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Say</span><span class="nv"> </span><span class="s">hello</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">{{input}}</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">creative</span><span class="nv"> </span><span class="s">way&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;greeting&quot;</span>
+</pre></div>
+</div>
+<p>Run the workflow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set your OpenAI API key</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-api-key-here&quot;</span>
+
+<span class="c1"># Run the workflow</span>
+pulsar<span class="w"> </span>run<span class="w"> </span>hello_world.yml<span class="w"> </span>--input<span class="w"> </span><span class="s2">&quot;Alice&quot;</span>
+</pre></div>
+</div>
+<p>You should see output like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>🚀 Starting workflow: Hello World Workflow
+📝 Step 1/1: greet
+✅ Workflow completed successfully
+
+Results:
+greeting: &quot;Hello Alice! 🌟 What a wonderful day to meet someone as amazing as you! How can I brighten your day today?&quot;
+</pre></div>
+</div>
+</section>
+<section id="multi-agent-workflow">
+<h2>Multi-Agent Workflow<a class="headerlink" href="#multi-agent-workflow" title="Link to this heading"></a></h2>
+<p>Create a more complex workflow with multiple agents:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.1&quot;</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Content</span><span class="nv"> </span><span class="s">Creation</span><span class="nv"> </span><span class="s">Pipeline&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Generate</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">improve</span><span class="nv"> </span><span class="s">content</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">multiple</span><span class="nv"> </span><span class="s">AI</span><span class="nv"> </span><span class="s">agents&quot;</span>
+
+<span class="nt">agents</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">researcher</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-4&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">research</span><span class="nv"> </span><span class="s">specialist&quot;</span>
+
+<span class="w">  </span><span class="nt">writer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;claude-3-sonnet-20240229&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;anthropic&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">creative</span><span class="nv"> </span><span class="s">writer&quot;</span>
+
+<span class="w">  </span><span class="nt">editor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-4&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">an</span><span class="nv"> </span><span class="s">expert</span><span class="nv"> </span><span class="s">editor&quot;</span>
+
+<span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;research&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;researcher&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Research</span><span class="nv"> </span><span class="s">key</span><span class="nv"> </span><span class="s">facts</span><span class="nv"> </span><span class="s">about:</span><span class="nv"> </span><span class="s">{{input}}&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;research&quot;</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;write&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;writer&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Write</span><span class="nv"> </span><span class="s">an</span><span class="nv"> </span><span class="s">engaging</span><span class="nv"> </span><span class="s">article</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">research:</span><span class="nv"> </span><span class="s">{{research}}&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;draft&quot;</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;editor&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Edit</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">improve</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">article:</span><span class="nv"> </span><span class="s">{{draft}}&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;final&quot;</span>
+</pre></div>
+</div>
+<p>Run it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-openai-key&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-anthropic-key&quot;</span>
+
+pulsar<span class="w"> </span>run<span class="w"> </span>content_creation.yml<span class="w"> </span>--input<span class="w"> </span><span class="s2">&quot;renewable energy&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="conditional-workflows">
+<h2>Conditional Workflows<a class="headerlink" href="#conditional-workflows" title="Link to this heading"></a></h2>
+<p>Add decision-making to your workflows:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.1&quot;</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Smart</span><span class="nv"> </span><span class="s">Content</span><span class="nv"> </span><span class="s">Processor&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Process</span><span class="nv"> </span><span class="s">content</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">conditional</span><span class="nv"> </span><span class="s">logic&quot;</span>
+
+<span class="nt">agents</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">analyzer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-4&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">analyze</span><span class="nv"> </span><span class="s">content</span><span class="nv"> </span><span class="s">quality&quot;</span>
+
+<span class="w">  </span><span class="nt">improver</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;claude-3-haiku-20240307&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;anthropic&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">improve</span><span class="nv"> </span><span class="s">content&quot;</span>
+
+<span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;analyze&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;analyzer&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Rate</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">content</span><span class="nv"> </span><span class="s">quality</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">scale</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">1-10:</span><span class="nv"> </span><span class="s">{{input}}&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;quality_score&quot;</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;conditional&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;check_quality&quot;</span>
+<span class="w">    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{int(quality_score)</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">7}}&quot;</span>
+<span class="w">    </span><span class="nt">then</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">        </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;publish&quot;</span>
+<span class="w">        </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;analyzer&quot;</span>
+<span class="w">        </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Content</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">good</span><span class="nv"> </span><span class="s">enough:</span><span class="nv"> </span><span class="s">{{input}}&quot;</span>
+<span class="w">        </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;result&quot;</span>
+<span class="w">    </span><span class="nt">else</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">        </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;improve&quot;</span>
+<span class="w">        </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;improver&quot;</span>
+<span class="w">        </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Improve</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">content:</span><span class="nv"> </span><span class="s">{{input}}&quot;</span>
+<span class="w">        </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;improved_content&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">        </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;final_review&quot;</span>
+<span class="w">        </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;analyzer&quot;</span>
+<span class="w">        </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Review</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">improved</span><span class="nv"> </span><span class="s">content:</span><span class="nv"> </span><span class="s">{{improved_content}}&quot;</span>
+<span class="w">        </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;result&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="using-templates">
+<h2>Using Templates<a class="headerlink" href="#using-templates" title="Link to this heading"></a></h2>
+<p>Pulsar supports Jinja2 templating for dynamic content:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.1&quot;</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Template</span><span class="nv"> </span><span class="s">Example&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Using</span><span class="nv"> </span><span class="s">templates</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">dynamic</span><span class="nv"> </span><span class="s">content&quot;</span>
+
+<span class="nt">variables</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">style</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;professional&quot;</span>
+<span class="w">  </span><span class="nt">tone</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;friendly&quot;</span>
+<span class="w">  </span><span class="nt">max_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+
+<span class="nt">agents</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">writer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-4&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">{{style}}</span><span class="nv"> </span><span class="s">writer</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">{{tone}}</span><span class="nv"> </span><span class="s">tone&quot;</span>
+
+<span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;write&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;writer&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">Write a {{style}} article about {{input}}.</span>
+<span class="w">      </span><span class="no">Keep it under {{max_length}} characters.</span>
+<span class="w">      </span><span class="no">Use a {{tone}} tone throughout.</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;article&quot;</span>
+</pre></div>
+</div>
+<p>Run with custom variables:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pulsar<span class="w"> </span>run<span class="w"> </span>template_example.yml<span class="w"> </span>--input<span class="w"> </span><span class="s2">&quot;artificial intelligence&quot;</span><span class="w"> </span>--var<span class="w"> </span><span class="nv">style</span><span class="o">=</span>creative<span class="w"> </span>--var<span class="w"> </span><span class="nv">tone</span><span class="o">=</span>enthusiastic
+</pre></div>
+</div>
+</section>
+<section id="local-ai-models">
+<h2>Local AI Models<a class="headerlink" href="#local-ai-models" title="Link to this heading"></a></h2>
+<p>Use local models with Ollama for privacy and cost savings:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.1&quot;</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Local</span><span class="nv"> </span><span class="s">AI</span><span class="nv"> </span><span class="s">Workflow&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Using</span><span class="nv"> </span><span class="s">local</span><span class="nv"> </span><span class="s">Ollama</span><span class="nv"> </span><span class="s">models&quot;</span>
+
+<span class="nt">agents</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">local_assistant</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;llama2&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;local&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">helpful</span><span class="nv"> </span><span class="s">local</span><span class="nv"> </span><span class="s">AI</span><span class="nv"> </span><span class="s">assistant&quot;</span>
+
+<span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;assist&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;local_assistant&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Help</span><span class="nv"> </span><span class="s">with:</span><span class="nv"> </span><span class="s">{{input}}&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;response&quot;</span>
+</pre></div>
+</div>
+<p>Make sure Ollama is running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start Ollama service</span>
+ollama<span class="w"> </span>serve
+
+<span class="c1"># Run the workflow</span>
+pulsar<span class="w"> </span>run<span class="w"> </span>local_workflow.yml<span class="w"> </span>--input<span class="w"> </span><span class="s2">&quot;explain quantum computing&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<p>Now that you have the basics, explore:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user_guide/workflows.html"><span class="doc">Workflow Fundamentals</span></a> - Advanced workflow patterns</p></li>
+<li><p><span class="xref std std-doc">../user_guide/agents</span> - AI provider configuration</p></li>
+<li><p><span class="xref std std-doc">../user_guide/templates</span> - Template system details</p></li>
+<li><p><span class="xref std std-doc">../user_guide/examples</span> - More example workflows</p></li>
+</ul>
+<p>For API usage, see the <span class="xref std std-doc">../api/index</span>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Pulsar Workflow Engine Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Pulsar Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

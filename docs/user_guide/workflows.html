@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workflow Fundamentals &mdash; Pulsar 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="../api_reference/index.html" />
+    <link rel="prev" title="Configuration" href="../configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Pulsar
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Workflow Fundamentals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#workflow-structure">Workflow Structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version">Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#name-and-description">Name and Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#agents">Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#workflow-steps">Workflow Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#step-types">Step Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#agent-steps">Agent Steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conditional-steps">Conditional Steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interaction-steps">Interaction Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#templates-and-variables">Templates and Variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#global-variables">Global Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-variables">Step Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#built-in-functions">Built-in Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#error-handling">Error Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#async-execution">Async Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state-management">State Management</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#workflow-validation">Workflow Validation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-issues">Common Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-workflows">Example Workflows</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#core-classes">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#agent-system">Agent System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#cli-interface">CLI Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#input-providers">Input Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#step-handlers">Step Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#module-models">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#module-0">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#type-definitions">Type Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#constants">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/index.html#environment-variables">Environment Variables</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#system-overview">System Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#core-principles">Core Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#component-architecture">Component Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#step-execution-flow">Step Execution Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#data-flow">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#performance-considerations">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#security-architecture">Security Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#deployment-patterns">Deployment Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#monitoring-and-observability">Monitoring and Observability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#future-extensions">Future Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development-setup">Development Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#project-structure">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development-workflow">Development Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#adding-new-features">Adding New Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release-process">Release Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#getting-help">Getting Help</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pulsar</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Workflow Fundamentals</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user_guide/workflows.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="workflow-fundamentals">
+<h1>Workflow Fundamentals<a class="headerlink" href="#workflow-fundamentals" title="Link to this heading"></a></h1>
+<p>Workflows are the core of Pulsar - they define how AI agents collaborate to accomplish tasks.</p>
+<section id="workflow-structure">
+<h2>Workflow Structure<a class="headerlink" href="#workflow-structure" title="Link to this heading"></a></h2>
+<p>A basic workflow consists of:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.1&quot;</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;My</span><span class="nv"> </span><span class="s">Workflow&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;What</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">workflow</span><span class="nv"> </span><span class="s">does&quot;</span>
+<span class="nt">agents</span><span class="p">:</span><span class="w">      </span><span class="c1"># AI agents available to the workflow</span>
+<span class="w">  </span><span class="c1"># ... agent definitions</span>
+<span class="nt">workflow</span><span class="p">:</span><span class="w">    </span><span class="c1"># Steps to execute</span>
+<span class="w">  </span><span class="c1"># ... step definitions</span>
+</pre></div>
+</div>
+<section id="version">
+<h3>Version<a class="headerlink" href="#version" title="Link to this heading"></a></h3>
+<p>Workflow format version. Currently <code class="docutils literal notranslate"><span class="pre">&quot;0.1&quot;</span></code>.</p>
+</section>
+<section id="name-and-description">
+<h3>Name and Description<a class="headerlink" href="#name-and-description" title="Link to this heading"></a></h3>
+<p>Human-readable identifiers:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Content</span><span class="nv"> </span><span class="s">Generation</span><span class="nv"> </span><span class="s">Pipeline&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Generate</span><span class="nv"> </span><span class="s">blog</span><span class="nv"> </span><span class="s">posts</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">research</span><span class="nv"> </span><span class="s">topics&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="agents">
+<h3>Agents<a class="headerlink" href="#agents" title="Link to this heading"></a></h3>
+<p>Define AI models available to the workflow:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">agents</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">researcher</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpt-4&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">research</span><span class="nv"> </span><span class="s">specialist&quot;</span>
+<span class="w">    </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.7</span>
+
+<span class="w">  </span><span class="nt">writer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;claude-3-sonnet-20240229&quot;</span>
+<span class="w">    </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;anthropic&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;You</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">creative</span><span class="nv"> </span><span class="s">writer&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="workflow-steps">
+<h3>Workflow Steps<a class="headerlink" href="#workflow-steps" title="Link to this heading"></a></h3>
+<p>The sequence of operations:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;research_topic&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;researcher&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Research:</span><span class="nv"> </span><span class="s">{{input}}&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;research&quot;</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;write_article&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;writer&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Write</span><span class="nv"> </span><span class="s">article</span><span class="nv"> </span><span class="s">using:</span><span class="nv"> </span><span class="s">{{research}}&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;article&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="step-types">
+<h2>Step Types<a class="headerlink" href="#step-types" title="Link to this heading"></a></h2>
+<section id="agent-steps">
+<h3>Agent Steps<a class="headerlink" href="#agent-steps" title="Link to this heading"></a></h3>
+<p>Execute AI models:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_step&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent_name&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;What</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">do:</span><span class="nv"> </span><span class="s">{{input}}&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;result&quot;</span>
+<span class="w">    </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span><span class="w">      </span><span class="c1"># Optional</span>
+<span class="w">    </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w">      </span><span class="c1"># Optional</span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span><span class="w">          </span><span class="c1"># Optional</span>
+</pre></div>
+</div>
+</section>
+<section id="conditional-steps">
+<h3>Conditional Steps<a class="headerlink" href="#conditional-steps" title="Link to this heading"></a></h3>
+<p>Branch based on conditions:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;conditional&quot;</span>
+<span class="w">  </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;check_quality&quot;</span>
+<span class="w">  </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{len(result)</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">100}}&quot;</span>
+<span class="w">  </span><span class="nt">then</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">      </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;publish&quot;</span>
+<span class="w">      </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;publisher&quot;</span>
+<span class="w">      </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Publish:</span><span class="nv"> </span><span class="s">{{result}}&quot;</span>
+<span class="w">  </span><span class="nt">else</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">      </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;improve&quot;</span>
+<span class="w">      </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;editor&quot;</span>
+<span class="w">      </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Improve:</span><span class="nv"> </span><span class="s">{{result}}&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="interaction-steps">
+<h3>Interaction Steps<a class="headerlink" href="#interaction-steps" title="Link to this heading"></a></h3>
+<p>Get user input:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;interaction&quot;</span>
+<span class="w">  </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;get_feedback&quot;</span>
+<span class="w">  </span><span class="nt">ask_user</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">question</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Rate</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">result</span><span class="nv"> </span><span class="s">(1-5)&quot;</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;number&quot;</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">question</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Comments?&quot;</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text&quot;</span>
+<span class="w">  </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;feedback&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="templates-and-variables">
+<h2>Templates and Variables<a class="headerlink" href="#templates-and-variables" title="Link to this heading"></a></h2>
+<p>Jinja2 templating enables dynamic content:</p>
+<section id="global-variables">
+<h3>Global Variables<a class="headerlink" href="#global-variables" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">variables</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">style</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;professional&quot;</span>
+<span class="w">  </span><span class="nt">max_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+
+<span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;write&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Write</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">{{style}}</span><span class="nv"> </span><span class="s">summary</span><span class="nv"> </span><span class="s">under</span><span class="nv"> </span><span class="s">{{max_length}}</span><span class="nv"> </span><span class="s">characters&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="step-variables">
+<h3>Step Variables<a class="headerlink" href="#step-variables" title="Link to this heading"></a></h3>
+<p>Access previous step outputs:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;research&quot;</span>
+<span class="w">    </span><span class="nt">save_to</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;research_data&quot;</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;summarize&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Summarize:</span><span class="nv"> </span><span class="s">{{research_data}}&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="built-in-functions">
+<h3>Built-in Functions<a class="headerlink" href="#built-in-functions" title="Link to this heading"></a></h3>
+<p>Use functions in templates:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">variables</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">items</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;apple&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;banana&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;cherry&quot;</span><span class="p p-Indicator">]</span>
+
+<span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;conditional&quot;</span>
+<span class="w">    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{len(items)</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">2}}&quot;</span>
+<span class="w">    </span><span class="nt">then</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Available functions:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">len(obj)</span></code> - Length of string, list, or dict</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int(value)</span></code> - Convert to integer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float(value)</span></code> - Convert to float</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str(value)</span></code> - Convert to string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool(value)</span></code> - Convert to boolean</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">upper(text)</span></code> - Uppercase string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lower(text)</span></code> - Lowercase string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">split(text,</span> <span class="pre">sep)</span></code> - Split string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join(items,</span> <span class="pre">sep)</span></code> - Join list with separator</p></li>
+</ul>
+</section>
+</section>
+<section id="advanced-features">
+<h2>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h2>
+<section id="error-handling">
+<h3>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h3>
+<p>Configure retry behavior:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;unreliable_task&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;unreliable_agent&quot;</span>
+<span class="w">    </span><span class="nt">retry</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">attempts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">      </span><span class="nt">backoff</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">  </span><span class="c1"># Exponential backoff multiplier</span>
+<span class="w">      </span><span class="nt">max_delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span><span class="w">  </span><span class="c1"># Maximum delay between retries</span>
+</pre></div>
+</div>
+</section>
+<section id="async-execution">
+<h3>Async Execution<a class="headerlink" href="#async-execution" title="Link to this heading"></a></h3>
+<p>Steps can run concurrently when independent:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;task1&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;worker1&quot;</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w">  </span><span class="c1"># No dependencies</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;task2&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;worker2&quot;</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w">  </span><span class="c1"># No dependencies</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;combine&quot;</span>
+<span class="w">    </span><span class="nt">agent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;combiner&quot;</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;task1&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;task2&quot;</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># Wait for both</span>
+</pre></div>
+</div>
+</section>
+<section id="state-management">
+<h3>State Management<a class="headerlink" href="#state-management" title="Link to this heading"></a></h3>
+<p>Access workflow execution state:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;conditional&quot;</span>
+<span class="w">    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{state.step_count</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">5}}&quot;</span>
+<span class="w">    </span><span class="nt">then</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">...</span><span class="p p-Indicator">]</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;agent&quot;</span>
+<span class="w">    </span><span class="nt">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Previous</span><span class="nv"> </span><span class="s">result:</span><span class="nv"> </span><span class="s">{{state.last_output}}&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="workflow-validation">
+<h2>Workflow Validation<a class="headerlink" href="#workflow-validation" title="Link to this heading"></a></h2>
+<p>Pulsar validates workflows before execution:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Validate syntax and structure</span>
+pulsar<span class="w"> </span>validate<span class="w"> </span>workflow.yml
+
+<span class="c1"># Check agent references</span>
+pulsar<span class="w"> </span>validate<span class="w"> </span>--strict<span class="w"> </span>workflow.yml
+</pre></div>
+</div>
+<section id="common-issues">
+<h3>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading"></a></h3>
+<p><strong>Undefined Variables</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ERROR: Undefined variable &#39;missing_var&#39;
+</pre></div>
+</div>
+<p>Solution: Ensure all variables are defined before use.</p>
+<p><strong>Circular Dependencies</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ERROR: Circular dependency detected
+</pre></div>
+</div>
+<p>Solution: Reorder steps to avoid circular references.</p>
+<p><strong>Invalid Agent Reference</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ERROR: Agent &#39;nonexistent&#39; not found
+</pre></div>
+</div>
+<p>Solution: Define all referenced agents in the <code class="docutils literal notranslate"><span class="pre">agents</span></code> section.</p>
+<p><strong>Template Syntax Error</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ERROR: Template syntax error
+</pre></div>
+</div>
+<p>Solution: Check Jinja2 template syntax in prompts and conditions.</p>
+</section>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
+<p><strong>Structure</strong></p>
+<ul class="simple">
+<li><p>Use descriptive names for steps and agents</p></li>
+<li><p>Group related steps together</p></li>
+<li><p>Add comments for complex logic</p></li>
+</ul>
+<p><strong>Performance</strong></p>
+<ul class="simple">
+<li><p>Use appropriate model sizes for tasks</p></li>
+<li><p>Set reasonable timeouts</p></li>
+<li><p>Configure retry policies</p></li>
+</ul>
+<p><strong>Maintainability</strong></p>
+<ul class="simple">
+<li><p>Use variables for common values</p></li>
+<li><p>Create reusable agent configurations</p></li>
+<li><p>Document complex workflows</p></li>
+</ul>
+<p><strong>Error Handling</strong></p>
+<ul class="simple">
+<li><p>Always configure retry policies for unreliable operations</p></li>
+<li><p>Use conditional steps for error recovery</p></li>
+<li><p>Log important state changes</p></li>
+</ul>
+</section>
+<section id="example-workflows">
+<h2>Example Workflows<a class="headerlink" href="#example-workflows" title="Link to this heading"></a></h2>
+<p>See the <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory for complete workflows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">simple_chain.yml</span></code> - Basic agent chaining</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conditional_workflow.yml</span></code> - Branching logic</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">content_creation.yml</span></code> - Multi-agent collaboration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_analysis.yml</span></code> - Analytical workflows</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../configuration.html" class="btn btn-neutral float-left" title="Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api_reference/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Pulsar Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

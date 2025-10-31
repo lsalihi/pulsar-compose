@@ -1,0 +1,649 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture Overview &mdash; Pulsar 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing Guide" href="contributing.html" />
+    <link rel="prev" title="API Reference" href="api_reference/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Pulsar
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/workflows.html">Workflow Fundamentals</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#core-classes">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#agent-system">Agent System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#cli-interface">CLI Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#input-providers">Input Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#step-handlers">Step Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-models">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-0">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#type-definitions">Type Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#constants">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#environment-variables">Environment Variables</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#system-overview">System Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#core-principles">Core Principles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#modularity">Modularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extensibility">Extensibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#type-safety">Type Safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asynchronous-design">Asynchronous Design</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#component-architecture">Component Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#workflow-engine">Workflow Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#agent-system">Agent System</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#step-execution-flow">Step Execution Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-types">Step Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#agent-steps">Agent Steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conditional-steps">Conditional Steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interaction-steps">Interaction Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#data-flow">Data Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#context-management">Context Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#template-system">Template System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#expression-evaluation">Expression Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#error-handling">Error Handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#exception-hierarchy">Exception Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#retry-logic">Retry Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#circuit-breaker-pattern">Circuit Breaker Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#performance-considerations">Performance Considerations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#concurrency-model">Concurrency Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#memory-management">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimization-strategies">Optimization Strategies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#security-architecture">Security Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api-key-management">API Key Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-validation">Input Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#network-security">Network Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plugin-security">Plugin Security</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#deployment-patterns">Deployment Patterns</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#single-node">Single Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cloud-deployment">Cloud Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#container-deployment">Container Deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#monitoring-and-observability">Monitoring and Observability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tracing">Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#health-checks">Health Checks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#future-extensions">Future Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-setup">Development Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#project-structure">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-workflow">Development Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#adding-new-features">Adding New Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#release-process">Release Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#getting-help">Getting Help</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pulsar</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Architecture Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/architecture.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="architecture-overview">
+<h1>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading"></a></h1>
+<p>Pulsar is a workflow orchestration engine designed for AI agent collaboration. This document describes the system architecture, design principles, and key components.</p>
+</section>
+<section id="system-overview">
+<h1>System Overview<a class="headerlink" href="#system-overview" title="Link to this heading"></a></h1>
+<p>Pulsar enables complex AI workflows through:</p>
+<ul class="simple">
+<li><p><strong>Agent Abstraction</strong>: Unified interface for different AI providers (OpenAI, Anthropic, Ollama)</p></li>
+<li><p><strong>Workflow Definition</strong>: YAML-based workflow specification with conditional logic and templating</p></li>
+<li><p><strong>Execution Engine</strong>: Asynchronous task execution with dependency management</p></li>
+<li><p><strong>CLI Interface</strong>: Command-line tools for workflow management and execution</p></li>
+<li><p><strong>Plugin System</strong>: Extensible architecture for custom input providers and step handlers</p></li>
+</ul>
+</section>
+<section id="core-principles">
+<h1>Core Principles<a class="headerlink" href="#core-principles" title="Link to this heading"></a></h1>
+<section id="modularity">
+<h2>Modularity<a class="headerlink" href="#modularity" title="Link to this heading"></a></h2>
+<p>Each component has a single responsibility and well-defined interfaces:</p>
+<ul class="simple">
+<li><p><strong>Agents</strong>: Handle AI model interactions</p></li>
+<li><p><strong>Executors</strong>: Manage workflow execution</p></li>
+<li><p><strong>Providers</strong>: Supply input data</p></li>
+<li><p><strong>Handlers</strong>: Process workflow steps</p></li>
+<li><p><strong>CLI</strong>: Provide user interface</p></li>
+</ul>
+</section>
+<section id="extensibility">
+<h2>Extensibility<a class="headerlink" href="#extensibility" title="Link to this heading"></a></h2>
+<p>Plugin-based architecture allows:</p>
+<ul class="simple">
+<li><p>Custom input providers (files, databases, APIs)</p></li>
+<li><p>New step types (loops, parallel execution, custom logic)</p></li>
+<li><p>Additional AI providers (Google, Cohere, etc.)</p></li>
+<li><p>CLI extensions and commands</p></li>
+</ul>
+</section>
+<section id="type-safety">
+<h2>Type Safety<a class="headerlink" href="#type-safety" title="Link to this heading"></a></h2>
+<p>Pydantic models ensure:</p>
+<ul class="simple">
+<li><p>Runtime type validation</p></li>
+<li><p>Automatic serialization/deserialization</p></li>
+<li><p>IDE support and autocomplete</p></li>
+<li><p>Configuration validation</p></li>
+</ul>
+</section>
+<section id="asynchronous-design">
+<h2>Asynchronous Design<a class="headerlink" href="#asynchronous-design" title="Link to this heading"></a></h2>
+<p>Built for performance:</p>
+<ul class="simple">
+<li><p>Concurrent step execution</p></li>
+<li><p>Non-blocking I/O operations</p></li>
+<li><p>Configurable timeouts and retries</p></li>
+<li><p>Resource-efficient task scheduling</p></li>
+</ul>
+</section>
+</section>
+<section id="component-architecture">
+<h1>Component Architecture<a class="headerlink" href="#component-architecture" title="Link to this heading"></a></h1>
+<section id="workflow-engine">
+<h2>Workflow Engine<a class="headerlink" href="#workflow-engine" title="Link to this heading"></a></h2>
+<p>The core execution system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┌─────────────────┐
+│  Workflow       │
+│  Definition     │
+│  (YAML)         │
+└─────────────────┘
+        │
+        ▼
+┌─────────────────┐    ┌─────────────────┐
+│  Parser &amp;       │    │  Validator      │
+│  Loader         │    │                 │
+└─────────────────┘    └─────────────────┘
+        │                       │
+        └───────────────────────┘
+                │
+                ▼
+┌─────────────────┐    ┌─────────────────┐
+│  Executor       │◄──►│  State         │
+│                 │    │  Manager       │
+└─────────────────┘    └─────────────────┘
+        │
+        ▼
+┌─────────────────┐
+│  Step Handlers  │
+└─────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="agent-system">
+<h2>Agent System<a class="headerlink" href="#agent-system" title="Link to this heading"></a></h2>
+<p>Unified AI provider interface:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┌─────────────────┐
+│  Agent Factory  │
+└─────────────────┘
+        │
+        ▼
+┌─────────────────┬─────────────────┬─────────────────┐
+│  OpenAI Agent   │  Anthropic      │  Ollama Agent   │
+│                 │  Agent          │                 │
+└─────────────────┴─────────────────┴─────────────────┘
+        │                       │                       │
+        └───────────────────────┼───────────────────────┘
+                                │
+                                ▼
+                    ┌─────────────────┐
+                    │  Base Agent     │
+                    │  Interface      │
+                    └─────────────────┘
+</pre></div>
+</div>
+</section>
+</section>
+<section id="step-execution-flow">
+<h1>Step Execution Flow<a class="headerlink" href="#step-execution-flow" title="Link to this heading"></a></h1>
+<ol class="arabic simple">
+<li><p><strong>Parsing</strong>: YAML workflow loaded and parsed into internal models</p></li>
+<li><p><strong>Validation</strong>: Syntax, references, and logic validated</p></li>
+<li><p><strong>Initialization</strong>: Agents created, state initialized</p></li>
+<li><p><strong>Execution</strong>: Steps processed in dependency order</p></li>
+<li><p><strong>Result Collection</strong>: Outputs gathered and formatted</p></li>
+</ol>
+<section id="step-types">
+<h2>Step Types<a class="headerlink" href="#step-types" title="Link to this heading"></a></h2>
+<section id="agent-steps">
+<h3>Agent Steps<a class="headerlink" href="#agent-steps" title="Link to this heading"></a></h3>
+<p>Execute AI models with prompts:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pseudocode for agent step execution</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">execute_agent_step</span><span class="p">(</span><span class="n">step_config</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">get_agent</span><span class="p">(</span><span class="n">step_config</span><span class="o">.</span><span class="n">agent</span><span class="p">)</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="n">render_template</span><span class="p">(</span><span class="n">step_config</span><span class="o">.</span><span class="n">prompt</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">agent</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="o">**</span><span class="n">step_config</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">step_config</span><span class="o">.</span><span class="n">save_to</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</section>
+<section id="conditional-steps">
+<h3>Conditional Steps<a class="headerlink" href="#conditional-steps" title="Link to this heading"></a></h3>
+<p>Branch execution based on conditions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pseudocode for conditional step</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">execute_conditional_step</span><span class="p">(</span><span class="n">step_config</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">condition</span> <span class="o">=</span> <span class="n">evaluate_expression</span><span class="p">(</span><span class="n">step_config</span><span class="o">.</span><span class="k">if</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">execute_steps</span><span class="p">(</span><span class="n">step_config</span><span class="o">.</span><span class="n">then</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">execute_steps</span><span class="p">(</span><span class="n">step_config</span><span class="o">.</span><span class="k">else</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="interaction-steps">
+<h3>Interaction Steps<a class="headerlink" href="#interaction-steps" title="Link to this heading"></a></h3>
+<p>Collect user input:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pseudocode for interaction step</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">execute_interaction_step</span><span class="p">(</span><span class="n">step_config</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">questions</span> <span class="o">=</span> <span class="n">step_config</span><span class="o">.</span><span class="n">ask_user</span>
+    <span class="n">answers</span> <span class="o">=</span> <span class="k">await</span> <span class="n">input_provider</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">questions</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">step_config</span><span class="o">.</span><span class="n">save_to</span><span class="p">,</span> <span class="n">answers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">answers</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="data-flow">
+<h1>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h1>
+<section id="context-management">
+<h2>Context Management<a class="headerlink" href="#context-management" title="Link to this heading"></a></h2>
+<p>Execution context tracks:</p>
+<ul class="simple">
+<li><p><strong>Variables</strong>: Template variables and step outputs</p></li>
+<li><p><strong>State</strong>: Execution metadata (step count, timing, errors)</p></li>
+<li><p><strong>Dependencies</strong>: Step relationships and completion status</p></li>
+<li><p><strong>Results</strong>: Accumulated outputs and intermediate data</p></li>
+</ul>
+</section>
+<section id="template-system">
+<h2>Template System<a class="headerlink" href="#template-system" title="Link to this heading"></a></h2>
+<p>Jinja2-based templating provides:</p>
+<ul class="simple">
+<li><p><strong>Variable Substitution</strong>: <code class="docutils literal notranslate"><span class="pre">{{variable_name}}</span></code></p></li>
+<li><p><strong>Expression Evaluation</strong>: <code class="docutils literal notranslate"><span class="pre">{{len(items)</span> <span class="pre">&gt;</span> <span class="pre">5}}</span></code></p></li>
+<li><p><strong>Filters</strong>: <code class="docutils literal notranslate"><span class="pre">{{text|upper}}</span></code></p></li>
+<li><p><strong>Control Structures</strong>: <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">if</span> <span class="pre">%}...{%</span> <span class="pre">endif</span> <span class="pre">%}</span></code></p></li>
+</ul>
+</section>
+<section id="expression-evaluation">
+<h2>Expression Evaluation<a class="headerlink" href="#expression-evaluation" title="Link to this heading"></a></h2>
+<p>Safe expression evaluation for conditions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Supported operations</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">ExpressionEvaluator</span><span class="p">()</span>
+
+<span class="c1"># Arithmetic</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s2">&quot;{{2 + 3}}&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>  <span class="c1"># 5</span>
+
+<span class="c1"># Comparisons</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s2">&quot;{{len(items) &gt; 0}}&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>  <span class="c1"># True/False</span>
+
+<span class="c1"># Function calls</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s2">&quot;{{max(values)}}&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>  <span class="c1"># Maximum value</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="error-handling">
+<h1>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h1>
+<section id="exception-hierarchy">
+<h2>Exception Hierarchy<a class="headerlink" href="#exception-hierarchy" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PulsarError
+├── ConfigurationError
+│   ├── ValidationError
+│   ├── MissingConfigError
+│   └── InvalidConfigError
+├── ExecutionError
+│   ├── StepExecutionError
+│   ├── TimeoutError
+│   └── DependencyError
+├── AgentError
+│   ├── ProviderError
+│   ├── AuthenticationError
+│   └── ModelError
+└── PluginError
+    ├── PluginLoadError
+    └── PluginExecutionError
+</pre></div>
+</div>
+</section>
+<section id="retry-logic">
+<h2>Retry Logic<a class="headerlink" href="#retry-logic" title="Link to this heading"></a></h2>
+<p>Configurable retry policies:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">retry_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;attempts&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;backoff&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>      <span class="c1"># Exponential backoff</span>
+    <span class="s2">&quot;max_delay&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>     <span class="c1"># Maximum delay</span>
+    <span class="s2">&quot;jitter&quot;</span><span class="p">:</span> <span class="kc">True</span>       <span class="c1"># Random jitter</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="circuit-breaker-pattern">
+<h2>Circuit Breaker Pattern<a class="headerlink" href="#circuit-breaker-pattern" title="Link to this heading"></a></h2>
+<p>Prevents cascade failures:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">circuit_breaker</span> <span class="o">=</span> <span class="n">CircuitBreaker</span><span class="p">(</span>
+    <span class="n">failure_threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">recovery_timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+    <span class="n">expected_exception</span><span class="o">=</span><span class="n">AgentError</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="performance-considerations">
+<h1>Performance Considerations<a class="headerlink" href="#performance-considerations" title="Link to this heading"></a></h1>
+<section id="concurrency-model">
+<h2>Concurrency Model<a class="headerlink" href="#concurrency-model" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Async/Await</strong>: Non-blocking I/O operations</p></li>
+<li><p><strong>Thread Pools</strong>: CPU-bound tasks</p></li>
+<li><p><strong>Semaphore Limits</strong>: Resource throttling</p></li>
+<li><p><strong>Task Groups</strong>: Structured concurrency</p></li>
+</ul>
+</section>
+<section id="memory-management">
+<h2>Memory Management<a class="headerlink" href="#memory-management" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Streaming</strong>: Large responses processed incrementally</p></li>
+<li><p><strong>Caching</strong>: Agent instances and parsed templates</p></li>
+<li><p><strong>Garbage Collection</strong>: Explicit cleanup of large objects</p></li>
+<li><p><strong>Limits</strong>: Configurable memory thresholds</p></li>
+</ul>
+</section>
+<section id="optimization-strategies">
+<h2>Optimization Strategies<a class="headerlink" href="#optimization-strategies" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Batch Processing</strong>: Multiple prompts in single API call</p></li>
+<li><p><strong>Connection Pooling</strong>: Reused HTTP connections</p></li>
+<li><p><strong>Model Selection</strong>: Appropriate model sizes for tasks</p></li>
+<li><p><strong>Caching</strong>: Repeated prompt/response caching</p></li>
+</ul>
+</section>
+</section>
+<section id="security-architecture">
+<h1>Security Architecture<a class="headerlink" href="#security-architecture" title="Link to this heading"></a></h1>
+<section id="api-key-management">
+<h2>API Key Management<a class="headerlink" href="#api-key-management" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Environment Variables</strong>: Secure key storage</p></li>
+<li><p><strong>Key Rotation</strong>: Automatic credential refresh</p></li>
+<li><p><strong>Access Logging</strong>: Audit trail for API usage</p></li>
+<li><p><strong>Encryption</strong>: Keys encrypted at rest</p></li>
+</ul>
+</section>
+<section id="input-validation">
+<h2>Input Validation<a class="headerlink" href="#input-validation" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Schema Validation</strong>: Pydantic model validation</p></li>
+<li><p><strong>Sanitization</strong>: Input cleaning and escaping</p></li>
+<li><p><strong>Size Limits</strong>: Prevent resource exhaustion</p></li>
+<li><p><strong>Type Checking</strong>: Runtime type enforcement</p></li>
+</ul>
+</section>
+<section id="network-security">
+<h2>Network Security<a class="headerlink" href="#network-security" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>TLS/SSL</strong>: Encrypted API communications</p></li>
+<li><p><strong>Timeouts</strong>: Prevent hanging connections</p></li>
+<li><p><strong>Rate Limiting</strong>: API abuse prevention</p></li>
+<li><p><strong>Proxy Support</strong>: Corporate network compatibility</p></li>
+</ul>
+</section>
+<section id="plugin-security">
+<h2>Plugin Security<a class="headerlink" href="#plugin-security" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Sandboxing</strong>: Isolated plugin execution</p></li>
+<li><p><strong>Permission Model</strong>: Restricted resource access</p></li>
+<li><p><strong>Code Review</strong>: Plugin validation process</p></li>
+<li><p><strong>Updates</strong>: Secure plugin distribution</p></li>
+</ul>
+</section>
+</section>
+<section id="deployment-patterns">
+<h1>Deployment Patterns<a class="headerlink" href="#deployment-patterns" title="Link to this heading"></a></h1>
+<section id="single-node">
+<h2>Single Node<a class="headerlink" href="#single-node" title="Link to this heading"></a></h2>
+<p>Simple deployment for development:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┌─────────────────┐
+│  Pulsar CLI     │
+│  + Local Ollama │
+└─────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="cloud-deployment">
+<h2>Cloud Deployment<a class="headerlink" href="#cloud-deployment" title="Link to this heading"></a></h2>
+<p>Scalable cloud architecture:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┌─────────────────┐    ┌─────────────────┐
+│  Load Balancer  │    │  API Gateway    │
+└─────────────────┘    └─────────────────┘
+        │                       │
+        ▼                       ▼
+┌─────────────────┬─────────────────┬─────────────────┐
+│  Pulsar Worker  │  Pulsar Worker  │  Pulsar Worker  │
+│  Instance       │  Instance       │  Instance       │
+└─────────────────┴─────────────────┴─────────────────┘
+        │                       │                       │
+        └───────────────────────┼───────────────────────┘
+                                │
+                                ▼
+                    ┌─────────────────┐
+                    │  Shared Storage │
+                    │  (Results,      │
+                    │   Workflows)    │
+                    └─────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="container-deployment">
+<h2>Container Deployment<a class="headerlink" href="#container-deployment" title="Link to this heading"></a></h2>
+<p>Docker-based deployment:</p>
+<div class="highlight-dockerfile notranslate"><div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
+
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;pulsar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;run&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;workflow.yml&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="monitoring-and-observability">
+<h1>Monitoring and Observability<a class="headerlink" href="#monitoring-and-observability" title="Link to this heading"></a></h1>
+<section id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Link to this heading"></a></h2>
+<p>Structured logging with levels:</p>
+<ul class="simple">
+<li><p><strong>DEBUG</strong>: Detailed execution information</p></li>
+<li><p><strong>INFO</strong>: Normal operation events</p></li>
+<li><p><strong>WARNING</strong>: Potential issues</p></li>
+<li><p><strong>ERROR</strong>: Execution failures</p></li>
+<li><p><strong>CRITICAL</strong>: System-level failures</p></li>
+</ul>
+</section>
+<section id="metrics">
+<h2>Metrics<a class="headerlink" href="#metrics" title="Link to this heading"></a></h2>
+<p>Performance and health metrics:</p>
+<ul class="simple">
+<li><p><strong>Execution Time</strong>: Step and workflow duration</p></li>
+<li><p><strong>Success Rate</strong>: Step completion percentage</p></li>
+<li><p><strong>Resource Usage</strong>: Memory and CPU utilization</p></li>
+<li><p><strong>API Calls</strong>: Provider usage statistics</p></li>
+<li><p><strong>Error Rates</strong>: Failure frequency by type</p></li>
+</ul>
+</section>
+<section id="tracing">
+<h2>Tracing<a class="headerlink" href="#tracing" title="Link to this heading"></a></h2>
+<p>Distributed tracing for complex workflows:</p>
+<ul class="simple">
+<li><p><strong>Step Dependencies</strong>: Execution flow visualization</p></li>
+<li><p><strong>Performance Bottlenecks</strong>: Slow operation identification</p></li>
+<li><p><strong>Error Propagation</strong>: Failure cause analysis</p></li>
+<li><p><strong>Concurrent Execution</strong>: Parallel processing tracking</p></li>
+</ul>
+</section>
+<section id="health-checks">
+<h2>Health Checks<a class="headerlink" href="#health-checks" title="Link to this heading"></a></h2>
+<p>System health monitoring:</p>
+<ul class="simple">
+<li><p><strong>Provider Connectivity</strong>: AI service availability</p></li>
+<li><p><strong>Resource Limits</strong>: Memory and disk space</p></li>
+<li><p><strong>Configuration Validity</strong>: Settings correctness</p></li>
+<li><p><strong>Plugin Status</strong>: Extension health</p></li>
+</ul>
+</section>
+</section>
+<section id="future-extensions">
+<h1>Future Extensions<a class="headerlink" href="#future-extensions" title="Link to this heading"></a></h1>
+<p>Planned architectural enhancements:</p>
+<dl class="simple">
+<dt><strong>Distributed Execution</strong></dt><dd><p>Workflow steps across multiple nodes</p>
+</dd>
+<dt><strong>Event-Driven Architecture</strong></dt><dd><p>Reactive workflow triggers and messaging</p>
+</dd>
+<dt><strong>Machine Learning Pipeline Integration</strong></dt><dd><p>MLflow and Kubeflow compatibility</p>
+</dd>
+<dt><strong>Web Interface</strong></dt><dd><p>Browser-based workflow designer and monitoring</p>
+</dd>
+<dt><strong>Multi-Language Support</strong></dt><dd><p>Non-Python agent implementations</p>
+</dd>
+<dt><strong>Advanced Scheduling</strong></dt><dd><p>Cron-based and event-triggered execution</p>
+</dd>
+<dt><strong>Workflow Versioning</strong></dt><dd><p>Git-based workflow version control</p>
+</dd>
+<dt><strong>Real-time Collaboration</strong></dt><dd><p>Multi-user workflow editing and execution</p>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api_reference/index.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Pulsar Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

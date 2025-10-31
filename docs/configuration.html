@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration &mdash; Pulsar 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Workflow Fundamentals" href="user_guide/workflows.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Pulsar
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment Variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api-keys">API Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ollama-configuration">Ollama Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#application-settings">Application Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-file">Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workflow-specific-configuration">Workflow-Specific Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-options">Command-Line Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#provider-specific-settings">Provider-Specific Settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openai">OpenAI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#anthropic">Anthropic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ollama">Ollama</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#proxy-configuration">Proxy Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#security-considerations">Security Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-validation">Configuration Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-configurations">Example Configurations</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/workflows.html">Workflow Fundamentals</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#core-classes">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#agent-system">Agent System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#cli-interface">CLI Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#input-providers">Input Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#step-handlers">Step Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-models">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-0">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#type-definitions">Type Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#constants">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#environment-variables">Environment Variables</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#system-overview">System Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#core-principles">Core Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#component-architecture">Component Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#step-execution-flow">Step Execution Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#data-flow">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#performance-considerations">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#security-architecture">Security Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#deployment-patterns">Deployment Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#monitoring-and-observability">Monitoring and Observability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#future-extensions">Future Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-setup">Development Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#project-structure">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-workflow">Development Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#adding-new-features">Adding New Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#release-process">Release Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#getting-help">Getting Help</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pulsar</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
+<p>Pulsar can be configured through environment variables, configuration files, and command-line options.</p>
+<section id="environment-variables">
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading"></a></h2>
+<section id="api-keys">
+<h3>API Keys<a class="headerlink" href="#api-keys" title="Link to this heading"></a></h3>
+<p>Set API keys for AI providers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># OpenAI</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-...&quot;</span>
+
+<span class="c1"># Anthropic</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>
+
+<span class="c1"># Together AI (optional)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">TOGETHER_API_KEY</span><span class="o">=</span><span class="s2">&quot;...&quot;</span>
+
+<span class="c1"># Other providers as needed</span>
+</pre></div>
+</div>
+</section>
+<section id="ollama-configuration">
+<h3>Ollama Configuration<a class="headerlink" href="#ollama-configuration" title="Link to this heading"></a></h3>
+<p>Configure local Ollama instance:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ollama server URL (default: http://localhost:11434)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OLLAMA_BASE_URL</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434&quot;</span>
+
+<span class="c1"># Model to use (can be overridden in workflows)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OLLAMA_DEFAULT_MODEL</span><span class="o">=</span><span class="s2">&quot;llama2&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="application-settings">
+<h3>Application Settings<a class="headerlink" href="#application-settings" title="Link to this heading"></a></h3>
+<p>Control Pulsar behavior:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Log level (DEBUG, INFO, WARNING, ERROR)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PULSAR_LOG_LEVEL</span><span class="o">=</span><span class="s2">&quot;INFO&quot;</span>
+
+<span class="c1"># Default timeout for API calls (seconds)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PULSAR_TIMEOUT</span><span class="o">=</span><span class="s2">&quot;30&quot;</span>
+
+<span class="c1"># Maximum concurrent requests</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PULSAR_MAX_CONCURRENT</span><span class="o">=</span><span class="s2">&quot;5&quot;</span>
+
+<span class="c1"># Cache directory for downloaded models</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PULSAR_CACHE_DIR</span><span class="o">=</span><span class="s2">&quot;~/.cache/pulsar&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="configuration-file">
+<h2>Configuration File<a class="headerlink" href="#configuration-file" title="Link to this heading"></a></h2>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">.pulsar.toml</span></code> or <code class="docutils literal notranslate"><span class="pre">pulsar.toml</span></code> file in your project directory:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[api_keys]</span>
+<span class="n">openai</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sk-...&quot;</span>
+<span class="n">anthropic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sk-ant-...&quot;</span>
+
+<span class="k">[ollama]</span>
+<span class="n">base_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http://localhost:11434&quot;</span>
+<span class="n">default_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;llama2&quot;</span>
+
+<span class="k">[app]</span>
+<span class="n">log_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;INFO&quot;</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+<span class="n">max_concurrent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span>
+<span class="n">cache_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;~/.cache/pulsar&quot;</span>
+
+<span class="k">[providers.openai]</span>
+<span class="n">organization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;org-...&quot;</span><span class="w">  </span><span class="c1"># Optional</span>
+<span class="n">api_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://api.openai.com/v1&quot;</span><span class="w">  </span><span class="c1"># Optional</span>
+
+<span class="k">[providers.anthropic]</span>
+<span class="n">api_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://api.anthropic.com&quot;</span><span class="w">  </span><span class="c1"># Optional</span>
+
+<span class="k">[providers.ollama]</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span><span class="w">  </span><span class="c1"># Override default timeout</span>
+</pre></div>
+</div>
+</section>
+<section id="workflow-specific-configuration">
+<h2>Workflow-Specific Configuration<a class="headerlink" href="#workflow-specific-configuration" title="Link to this heading"></a></h2>
+<p>Override settings in individual workflows:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.1&quot;</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Configured</span><span class="nv"> </span><span class="s">Workflow&quot;</span>
+
+<span class="nt">config</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
+<span class="w">  </span><span class="nt">max_retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DEBUG&quot;</span>
+
+<span class="nt">agents</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># ... agent definitions</span>
+
+<span class="nt">workflow</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># ... workflow steps</span>
+</pre></div>
+</div>
+</section>
+<section id="command-line-options">
+<h2>Command-Line Options<a class="headerlink" href="#command-line-options" title="Link to this heading"></a></h2>
+<p>Override configuration from command line:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set log level</span>
+pulsar<span class="w"> </span>--log-level<span class="w"> </span>DEBUG<span class="w"> </span>run<span class="w"> </span>workflow.yml
+
+<span class="c1"># Set timeout</span>
+pulsar<span class="w"> </span>--timeout<span class="w"> </span><span class="m">60</span><span class="w"> </span>run<span class="w"> </span>workflow.yml
+
+<span class="c1"># Use specific config file</span>
+pulsar<span class="w"> </span>--config<span class="w"> </span>/path/to/config.toml<span class="w"> </span>run<span class="w"> </span>workflow.yml
+
+<span class="c1"># Set API keys inline (not recommended for production)</span>
+pulsar<span class="w"> </span>--openai-key<span class="w"> </span>sk-...<span class="w"> </span>run<span class="w"> </span>workflow.yml
+</pre></div>
+</div>
+<p>Available CLI options:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>--log-level LEVEL       Set logging level
+--timeout SECONDS       API call timeout
+--max-concurrent N      Maximum concurrent requests
+--config FILE          Configuration file path
+--openai-key KEY       OpenAI API key
+--anthropic-key KEY    Anthropic API key
+--ollama-url URL       Ollama base URL
+</pre></div>
+</div>
+</section>
+<section id="provider-specific-settings">
+<h2>Provider-Specific Settings<a class="headerlink" href="#provider-specific-settings" title="Link to this heading"></a></h2>
+<section id="openai">
+<h3>OpenAI<a class="headerlink" href="#openai" title="Link to this heading"></a></h3>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[providers.openai]</span>
+<span class="n">api_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sk-...&quot;</span>
+<span class="n">organization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;org-...&quot;</span>
+<span class="n">api_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://api.openai.com/v1&quot;</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+<span class="n">max_retries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+<section id="anthropic">
+<h3>Anthropic<a class="headerlink" href="#anthropic" title="Link to this heading"></a></h3>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[providers.anthropic]</span>
+<span class="n">api_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sk-ant-...&quot;</span>
+<span class="n">api_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://api.anthropic.com&quot;</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+<span class="n">max_retries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<span class="n">max_tokens</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4096</span>
+</pre></div>
+</div>
+</section>
+<section id="ollama">
+<h3>Ollama<a class="headerlink" href="#ollama" title="Link to this heading"></a></h3>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[providers.ollama]</span>
+<span class="n">base_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http://localhost:11434&quot;</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span>
+<span class="n">default_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;llama2&quot;</span>
+<span class="n">request_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">300</span><span class="w">  </span><span class="c1"># For long-running generations</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="proxy-configuration">
+<h2>Proxy Configuration<a class="headerlink" href="#proxy-configuration" title="Link to this heading"></a></h2>
+<p>Configure HTTP proxies for API calls:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">HTTP_PROXY</span><span class="o">=</span><span class="s2">&quot;http://proxy.company.com:8080&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">HTTPS_PROXY</span><span class="o">=</span><span class="s2">&quot;http://proxy.company.com:8080&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NO_PROXY</span><span class="o">=</span><span class="s2">&quot;localhost,127.0.0.1,.local&quot;</span>
+</pre></div>
+</div>
+<p>Or in configuration file:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[proxy]</span>
+<span class="n">http</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http://proxy.company.com:8080&quot;</span>
+<span class="n">https</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http://proxy.company.com:8080&quot;</span>
+<span class="n">no_proxy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;localhost,127.0.0.1,.local&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="security-considerations">
+<h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading"></a></h2>
+<p><strong>API Keys</strong></p>
+<ul class="simple">
+<li><p>Never commit API keys to version control</p></li>
+<li><p>Use environment variables or secure key management</p></li>
+<li><p>Rotate keys regularly</p></li>
+<li><p>Use read-only keys when possible</p></li>
+</ul>
+<p><strong>Network Security</strong></p>
+<ul class="simple">
+<li><p>Use HTTPS for all API communications</p></li>
+<li><p>Configure proxies for corporate environments</p></li>
+<li><p>Validate SSL certificates</p></li>
+</ul>
+<p><strong>File Permissions</strong></p>
+<ul class="simple">
+<li><p>Restrict access to configuration files</p></li>
+<li><p>Use secure file permissions (600) for sensitive files</p></li>
+</ul>
+<p><strong>Environment Isolation</strong></p>
+<ul class="simple">
+<li><p>Use virtual environments for Python dependencies</p></li>
+<li><p>Isolate different projects with separate configurations</p></li>
+<li><p>Use Docker containers for consistent environments</p></li>
+</ul>
+</section>
+<section id="configuration-validation">
+<h2>Configuration Validation<a class="headerlink" href="#configuration-validation" title="Link to this heading"></a></h2>
+<p>Pulsar validates configuration on startup:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Validate configuration</span>
+pulsar<span class="w"> </span>config<span class="w"> </span>validate
+
+<span class="c1"># Show current configuration</span>
+pulsar<span class="w"> </span>config<span class="w"> </span>show
+
+<span class="c1"># Check provider connectivity</span>
+pulsar<span class="w"> </span>config<span class="w"> </span>test-providers
+</pre></div>
+</div>
+</section>
+<section id="example-configurations">
+<h2>Example Configurations<a class="headerlink" href="#example-configurations" title="Link to this heading"></a></h2>
+<p><strong>Development Environment</strong></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[app]</span>
+<span class="n">log_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span>
+
+<span class="k">[api_keys]</span>
+<span class="n">openai</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sk-test-...&quot;</span>
+
+<span class="k">[providers.openai]</span>
+<span class="n">api_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://api.openai.com/v1&quot;</span>
+</pre></div>
+</div>
+<p><strong>Production Environment</strong></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[app]</span>
+<span class="n">log_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;WARNING&quot;</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+<span class="n">max_concurrent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
+
+<span class="k">[api_keys]</span>
+<span class="n">openai</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sk-prod-...&quot;</span>
+<span class="n">anthropic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;sk-ant-prod-...&quot;</span>
+
+<span class="k">[providers.openai]</span>
+<span class="n">organization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;org-prod&quot;</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+
+<span class="k">[providers.anthropic]</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+</pre></div>
+</div>
+<p><strong>Local Development with Ollama</strong></p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[app]</span>
+<span class="n">log_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;INFO&quot;</span>
+
+<span class="k">[ollama]</span>
+<span class="n">base_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http://localhost:11434&quot;</span>
+<span class="n">default_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;llama2&quot;</span>
+
+<span class="k">[providers.ollama]</span>
+<span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">120</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user_guide/workflows.html" class="btn btn-neutral float-right" title="Workflow Fundamentals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Pulsar Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

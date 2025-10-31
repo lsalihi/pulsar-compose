@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulsar Workflow Engine Documentation &mdash; Pulsar 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quick Start Guide" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Pulsar
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/workflows.html">Workflow Fundamentals</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#core-classes">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#agent-system">Agent System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#cli-interface">CLI Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#input-providers">Input Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#step-handlers">Step Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-models">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-0">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#type-definitions">Type Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#constants">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#environment-variables">Environment Variables</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#system-overview">System Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#core-principles">Core Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#component-architecture">Component Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#step-execution-flow">Step Execution Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#data-flow">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#performance-considerations">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#security-architecture">Security Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#deployment-patterns">Deployment Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#monitoring-and-observability">Monitoring and Observability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#future-extensions">Future Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-setup">Development Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#project-structure">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-workflow">Development Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#adding-new-features">Adding New Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#release-process">Release Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#getting-help">Getting Help</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Pulsar</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Pulsar Workflow Engine Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pulsar-workflow-engine-documentation">
+<h1>Pulsar Workflow Engine Documentation<a class="headerlink" href="#pulsar-workflow-engine-documentation" title="Link to this heading"></a></h1>
+<a class="reference internal image-reference" href="_images/logo_v2.png"><img alt="Pulsar Logo" class="align-center" src="_images/logo_v2.png" style="width: 200px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div style="text-align: center; margin-bottom: 2em;">
+   <a href="https://pypi.org/project/pulsar-compose/" class="badge">
+      <img src="https://img.shields.io/pypi/v/pulsar-compose.svg" alt="PyPI version" />
+   </a>
+   <a href="https://github.com/lsalihi/pulsar-compose/actions" class="badge">
+      <img src="https://img.shields.io/github/workflow/status/lsalihi/pulsar-compose/CI/main" alt="CI status" />
+   </a>
+   <a href="https://pulsar.readthedocs.io/" class="badge">
+      <img src="https://readthedocs.org/projects/pulsar/badge/?version=latest" alt="Documentation Status" />
+   </a>
+   <a href="https://github.com/lsalihi/pulsar-compose/blob/main/LICENSE" class="badge">
+      <img src="https://img.shields.io/github/license/lsalihi/pulsar-compose.svg" alt="License" />
+   </a>
+</div><p>Welcome to Pulsar, a declarative workflow engine for orchestrating AI agents in YAML-defined workflows.</p>
+<dl class="simple">
+<dt>🚀 <strong>Quick Start</strong></dt><dd><p>Get up and running in minutes with our <a class="reference internal" href="quickstart.html"><span class="doc">Quick Start Guide</span></a> guide.</p>
+</dd>
+<dt>📚 <strong>User Guide</strong></dt><dd><p>Learn how to create workflows, use templates, and leverage advanced features.</p>
+</dd>
+<dt>🔧 <strong>API Reference</strong></dt><dd><p>Complete API documentation for all modules and classes.</p>
+</dd>
+<dt>🏗️ <strong>Architecture</strong></dt><dd><p>Understand the system design and internal workings.</p>
+</dd>
+<dt>🤝 <strong>Contributing</strong></dt><dd><p>Help improve Pulsar by contributing code, documentation, or reporting issues.</p>
+</dd>
+</dl>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#your-first-workflow">Your First Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#multi-agent-workflow">Multi-Agent Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#conditional-workflows">Conditional Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#using-templates">Using Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#local-ai-models">Local AI Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-methods">Installation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#ai-provider-setup">AI Provider Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#verification">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#development-installation">Development Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#environment-variables">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-file">Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#workflow-specific-configuration">Workflow-Specific Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#command-line-options">Command-Line Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#provider-specific-settings">Provider-Specific Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#proxy-configuration">Proxy Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-validation">Configuration Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#example-configurations">Example Configurations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/workflows.html">Workflow Fundamentals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/workflows.html#workflow-structure">Workflow Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/workflows.html#step-types">Step Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/workflows.html#templates-and-variables">Templates and Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/workflows.html#advanced-features">Advanced Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/workflows.html#workflow-validation">Workflow Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/workflows.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/workflows.html#example-workflows">Example Workflows</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#core-classes">Core Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-engine.executor">Pulsar Engine</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#agent-system">Agent System</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-agents.base">Base Agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-agents.factory">Agent Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#provider-agents">Provider Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-agents.config">Agent Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#cli-interface">CLI Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-cli.main">Main CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-cli.config">CLI Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-cli.history">History Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-cli.progress">Progress Tracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-cli.plugins">Plugin System</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#input-providers">Input Providers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#base-provider">Base Provider</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#step-handlers">Step Handlers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#base-handler">Base Handler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-models">Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#models.state.StateManager"><code class="docutils literal notranslate"><span class="pre">StateManager</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#models.template.TemplateRenderer"><code class="docutils literal notranslate"><span class="pre">TemplateRenderer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-0">Exceptions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#id0"><code class="docutils literal notranslate"><span class="pre">PulsarEngine</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#id7"><code class="docutils literal notranslate"><span class="pre">AgentResult</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#id14"><code class="docutils literal notranslate"><span class="pre">AgentConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-3">Expression Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-4">Configuration Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#module-5">Plugin Loading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#type-definitions">Type Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#constants">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#environment-variables">Environment Variables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#core-configuration">Core Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#provider-configuration">Provider Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#execution-configuration">Execution Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/index.html#id70">CLI Configuration</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#system-overview">System Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#core-principles">Core Principles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#modularity">Modularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#extensibility">Extensibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#type-safety">Type Safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#asynchronous-design">Asynchronous Design</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#component-architecture">Component Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#workflow-engine">Workflow Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#agent-system">Agent System</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#step-execution-flow">Step Execution Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#step-types">Step Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#data-flow">Data Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#context-management">Context Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#template-system">Template System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#expression-evaluation">Expression Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#error-handling">Error Handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#exception-hierarchy">Exception Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#retry-logic">Retry Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#circuit-breaker-pattern">Circuit Breaker Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#performance-considerations">Performance Considerations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#concurrency-model">Concurrency Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#memory-management">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#optimization-strategies">Optimization Strategies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#security-architecture">Security Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#api-key-management">API Key Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#input-validation">Input Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#network-security">Network Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#plugin-security">Plugin Security</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#deployment-patterns">Deployment Patterns</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#single-node">Single Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#cloud-deployment">Cloud Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#container-deployment">Container Deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#monitoring-and-observability">Monitoring and Observability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#tracing">Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#health-checks">Health Checks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#future-extensions">Future Extensions</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-setup">Development Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#project-structure">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-workflow">Development Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#adding-new-features">Adding New Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#release-process">Release Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#getting-help">Getting Help</a></li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-right" title="Quick Start Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Pulsar Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

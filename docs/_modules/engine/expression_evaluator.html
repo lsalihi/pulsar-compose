@@ -1,0 +1,816 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>engine.expression_evaluator &mdash; Pulsar 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Pulsar
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide/workflows.html">Workflow Fundamentals</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#core-classes">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#agent-system">Agent System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#cli-interface">CLI Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#input-providers">Input Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#step-handlers">Step Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#module-models">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#module-0">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#type-definitions">Type Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#constants">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html#environment-variables">Environment Variables</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#system-overview">System Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#core-principles">Core Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#component-architecture">Component Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#step-execution-flow">Step Execution Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#data-flow">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#performance-considerations">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#security-architecture">Security Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#deployment-patterns">Deployment Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#monitoring-and-observability">Monitoring and Observability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html#future-extensions">Future Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#development-setup">Development Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#project-structure">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#development-workflow">Development Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#adding-new-features">Adding New Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#release-process">Release Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html#getting-help">Getting Help</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pulsar</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">engine.expression_evaluator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for engine.expression_evaluator</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Advanced expression evaluator for Pulsar conditional execution.</span>
+
+<span class="sd">Supports template variables, string operations, membership tests, and type checking.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">operator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+
+<div class="viewcode-block" id="ExpressionError">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ExpressionError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExpressionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom exception for expression evaluation errors.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="TokenType">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.TokenType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Token types for expression parsing.&quot;&quot;&quot;</span>
+    <span class="n">VARIABLE</span> <span class="o">=</span> <span class="s2">&quot;variable&quot;</span>
+    <span class="n">STRING</span> <span class="o">=</span> <span class="s2">&quot;string&quot;</span>
+    <span class="n">NUMBER</span> <span class="o">=</span> <span class="s2">&quot;number&quot;</span>
+    <span class="n">BOOLEAN</span> <span class="o">=</span> <span class="s2">&quot;boolean&quot;</span>
+    <span class="n">OPERATOR</span> <span class="o">=</span> <span class="s2">&quot;operator&quot;</span>
+    <span class="n">FUNCTION</span> <span class="o">=</span> <span class="s2">&quot;function&quot;</span>
+    <span class="n">PARENTHESIS</span> <span class="o">=</span> <span class="s2">&quot;parenthesis&quot;</span>
+    <span class="n">EOF</span> <span class="o">=</span> <span class="s2">&quot;eof&quot;</span></div>
+
+
+<div class="viewcode-block" id="Token">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.Token">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Token</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Token representation.&quot;&quot;&quot;</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">TokenType</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_raise_type_error</span><span class="p">(</span><span class="n">func_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">() expects string, array, or object, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ExpressionParser">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ExpressionParser">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExpressionParser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parser for expression language.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Operator precedence (higher number = higher precedence)</span>
+    <span class="n">OPERATORS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;||&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="ow">or</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;&amp;&amp;&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;==&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;!=&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;&lt;&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;&lt;=&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;&gt;&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;&gt;=&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;+&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;-&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;*&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;/&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">),</span>
+        <span class="s1">&#39;%&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Supported functions</span>
+    <span class="n">FUNCTIONS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;contains&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">substr</span><span class="p">:</span> <span class="n">substr</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">),</span>
+        <span class="s1">&#39;startsWith&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">prefix</span><span class="p">)),</span>
+        <span class="s1">&#39;endsWith&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">suffix</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">suffix</span><span class="p">)),</span>
+        <span class="s1">&#39;isString&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
+        <span class="s1">&#39;isNumber&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span>
+        <span class="s1">&#39;isObject&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span>
+        <span class="s1">&#39;isArray&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span>
+        <span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">dict</span><span class="p">))</span> <span class="k">else</span> <span class="n">_raise_type_error</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+        <span class="s1">&#39;upper&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+        <span class="s1">&#39;lower&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="s1">&#39;trim&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="ExpressionParser.__init__">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ExpressionParser.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokenize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_token_index</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Token</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tokenize the expression string.&quot;&quot;&quot;</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">):</span>
+            <span class="n">char</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle template variables {{variable}}</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;{&#39;</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;{&#39;</span><span class="p">:</span>
+                <span class="n">var_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\{\{([^}]+)\}\}&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">:])</span>
+                <span class="k">if</span> <span class="n">var_match</span><span class="p">:</span>
+                    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">VARIABLE</span><span class="p">,</span> <span class="n">var_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="n">var_match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+                    <span class="k">continue</span>
+
+            <span class="c1"># Handle string literals</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">):</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">char</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">:</span>
+                        <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">):</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">i</span><span class="p">],</span> <span class="n">start</span><span class="p">))</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle numbers</span>
+            <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()):</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">):</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">i</span><span class="p">])</span> <span class="k">if</span> <span class="s1">&#39;.&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">i</span><span class="p">]</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">i</span><span class="p">])</span>
+                    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">NUMBER</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid number: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle boolean literals</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">4</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;false&#39;</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">5</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle null literal</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;null&#39;</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">VARIABLE</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>  <span class="c1"># Treat null as a special variable</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">4</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle operators (longest match first)</span>
+            <span class="n">operator_found</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">OPERATORS</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">op</span><span class="p">)]</span> <span class="o">==</span> <span class="n">op</span><span class="p">:</span>
+                    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+                    <span class="n">operator_found</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">operator_found</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle &#39;in&#39; and &#39;not in&#39;</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">6</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;not in&#39;</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span><span class="p">,</span> <span class="s1">&#39;not in&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">6</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;in&#39;</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span><span class="p">,</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle &#39;not&#39;</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;not&#39;</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span><span class="p">,</span> <span class="s1">&#39;not&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">3</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle brackets for arrays</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="s1">&#39;[]&#39;</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span><span class="p">,</span> <span class="n">char</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle parentheses</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="s1">&#39;()&#39;</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span><span class="p">,</span> <span class="n">char</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle commas (for array/function arguments)</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;,&#39;</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Handle function calls and identifiers</span>
+            <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">or</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;_&#39;</span><span class="p">:</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isalnum</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;_&#39;</span><span class="p">):</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">i</span><span class="p">]</span>
+
+                <span class="c1"># Check if it&#39;s a function</span>
+                <span class="k">if</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">:</span>
+                    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">FUNCTION</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Assume it&#39;s a variable</span>
+                    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">VARIABLE</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
+                <span class="k">continue</span>
+
+            <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected character &#39;</span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s2">&#39; at position </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">EOF</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">tokens</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_current_token</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Token</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get current token.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_token_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_token_index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># EOF token</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_consume_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expected_type</span><span class="p">:</span> <span class="n">TokenType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Token</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Consume and return current token.&quot;&quot;&quot;</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">expected_type</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">expected_type</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">expected_type</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> at position </span><span class="si">{</span><span class="n">token</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_token_index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">token</span>
+
+<div class="viewcode-block" id="ExpressionParser.parse">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ExpressionParser.parse">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ExpressionNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse the expression and return the AST root.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_or_expression</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">EOF</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected token after expression: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ExpressionError</span><span class="p">):</span>
+                <span class="k">raise</span>
+            <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parse error: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_or_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ExpressionNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse OR expressions (lowest precedence).&quot;&quot;&quot;</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_and_expression</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;||&#39;</span><span class="p">:</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_and_expression</span><span class="p">()</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">BinaryOpNode</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">left</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_and_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ExpressionNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse AND expressions.&quot;&quot;&quot;</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_comparison_expression</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;&amp;&amp;&#39;</span><span class="p">:</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_comparison_expression</span><span class="p">()</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">BinaryOpNode</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">left</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_comparison_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ExpressionNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse comparison expressions.&quot;&quot;&quot;</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_additive_expression</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span><span class="p">:</span>
+            <span class="n">op</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">if</span> <span class="n">op</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="s1">&#39;!=&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;=&#39;</span><span class="p">,</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="s1">&#39;not in&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_additive_expression</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">BinaryOpNode</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">left</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_additive_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ExpressionNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse additive expressions (+, -).&quot;&quot;&quot;</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_multiplicative_expression</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">):</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_multiplicative_expression</span><span class="p">()</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">BinaryOpNode</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">left</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_multiplicative_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ExpressionNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse multiplicative expressions (*, /, %).&quot;&quot;&quot;</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_unary_expression</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">):</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_unary_expression</span><span class="p">()</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">BinaryOpNode</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">left</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_unary_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ExpressionNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse unary expressions (not).&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;not&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">UnaryOpNode</span><span class="p">(</span><span class="s1">&#39;not&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_unary_expression</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_primary_expression</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_primary_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ExpressionNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse primary expressions (literals, variables, function calls, parentheses, arrays).&quot;&quot;&quot;</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">NUMBER</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">LiteralNode</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span>
+            <span class="c1"># Remove quotes</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">token</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">return</span> <span class="n">LiteralNode</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">LiteralNode</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">VARIABLE</span><span class="p">:</span>
+            <span class="n">var_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span>
+            <span class="c1"># Handle null literal</span>
+            <span class="k">if</span> <span class="n">var_token</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">LiteralNode</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="c1"># Handle array indexing after variable</span>
+            <span class="n">variable_node</span> <span class="o">=</span> <span class="n">VariableNode</span><span class="p">(</span><span class="n">var_token</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_array_access</span><span class="p">(</span><span class="n">variable_node</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">FUNCTION</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_function_call</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span><span class="p">)</span>
+            <span class="n">expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_or_expression</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span><span class="p">)</span>  <span class="c1"># Should be &#39;)&#39;</span>
+            <span class="k">return</span> <span class="n">expr</span>
+
+        <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;[&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_array_literal</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected token: </span><span class="si">{</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> &#39;</span><span class="si">{</span><span class="n">token</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; at position </span><span class="si">{</span><span class="n">token</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_array_access</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable_node</span><span class="p">:</span> <span class="s1">&#39;VariableNode&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ExpressionNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse array access after a variable (e.g., var[0]).&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;[&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span>  <span class="c1"># consume &#39;[&#39;</span>
+            <span class="n">index_expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_or_expression</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span><span class="p">)</span>  <span class="c1"># consume &#39;]&#39;</span>
+            
+            <span class="c1"># Create a special node for array access</span>
+            <span class="n">array_access_node</span> <span class="o">=</span> <span class="n">ArrayAccessNode</span><span class="p">(</span><span class="n">variable_node</span><span class="p">,</span> <span class="n">index_expr</span><span class="p">)</span>
+            <span class="c1"># Allow chaining: var[0][1]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_array_access</span><span class="p">(</span><span class="n">array_access_node</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">variable_node</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_array_literal</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ArrayLiteralNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse array literals like [1, 2, &#39;hello&#39;].&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span><span class="p">)</span>  <span class="c1"># Should be &#39;[&#39;</span>
+
+        <span class="n">elements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;]&#39;</span><span class="p">:</span>
+            <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_or_expression</span><span class="p">())</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;,&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span>
+                <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_or_expression</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span><span class="p">)</span>  <span class="c1"># Should be &#39;]&#39;</span>
+        <span class="k">return</span> <span class="n">ArrayLiteralNode</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_function_call</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;FunctionCallNode&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse function calls.&quot;&quot;&quot;</span>
+        <span class="n">func_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">FUNCTION</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span><span class="p">)</span>  <span class="c1"># Should be &#39;(&#39;</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;)&#39;</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_or_expression</span><span class="p">())</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TokenType</span><span class="o">.</span><span class="n">OPERATOR</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_token</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;,&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">()</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_or_expression</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_consume_token</span><span class="p">(</span><span class="n">TokenType</span><span class="o">.</span><span class="n">PARENTHESIS</span><span class="p">)</span>  <span class="c1"># Should be &#39;)&#39;</span>
+        <span class="k">return</span> <span class="n">FunctionCallNode</span><span class="p">(</span><span class="n">func_name</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span></div>
+
+
+<span class="c1"># AST Node classes</span>
+<div class="viewcode-block" id="ExpressionNode">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ExpressionNode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExpressionNode</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for expression AST nodes.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="LiteralNode">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.LiteralNode">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LiteralNode</span><span class="p">(</span><span class="n">ExpressionNode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Literal value node.&quot;&quot;&quot;</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span></div>
+
+
+<div class="viewcode-block" id="VariableNode">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.VariableNode">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VariableNode</span><span class="p">(</span><span class="n">ExpressionNode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Variable reference node.&quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="BinaryOpNode">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.BinaryOpNode">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BinaryOpNode</span><span class="p">(</span><span class="n">ExpressionNode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Binary operation node.&quot;&quot;&quot;</span>
+    <span class="n">left</span><span class="p">:</span> <span class="n">ExpressionNode</span>
+    <span class="n">operator</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">right</span><span class="p">:</span> <span class="n">ExpressionNode</span></div>
+
+
+<div class="viewcode-block" id="UnaryOpNode">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.UnaryOpNode">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">UnaryOpNode</span><span class="p">(</span><span class="n">ExpressionNode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unary operation node.&quot;&quot;&quot;</span>
+    <span class="n">operator</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">operand</span><span class="p">:</span> <span class="n">ExpressionNode</span></div>
+
+
+<div class="viewcode-block" id="FunctionCallNode">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.FunctionCallNode">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallNode</span><span class="p">(</span><span class="n">ExpressionNode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Function call node.&quot;&quot;&quot;</span>
+    <span class="n">function_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">arguments</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ExpressionNode</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ArrayLiteralNode">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ArrayLiteralNode">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ArrayLiteralNode</span><span class="p">(</span><span class="n">ExpressionNode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Array literal node.&quot;&quot;&quot;</span>
+    <span class="n">elements</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ExpressionNode</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ArrayAccessNode">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ArrayAccessNode">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ArrayAccessNode</span><span class="p">(</span><span class="n">ExpressionNode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Array access node (e.g., arr[0]).&quot;&quot;&quot;</span>
+    <span class="n">array</span><span class="p">:</span> <span class="n">ExpressionNode</span>
+    <span class="n">index</span><span class="p">:</span> <span class="n">ExpressionNode</span></div>
+
+
+<div class="viewcode-block" id="ExpressionEvaluator">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ExpressionEvaluator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExpressionEvaluator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evaluator for parsed expressions.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ExpressionEvaluator.__init__">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ExpressionEvaluator.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="ExpressionEvaluator.evaluate">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.ExpressionEvaluator.evaluate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">ExpressionNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate an expression node.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">LiteralNode</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">VariableNode</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_variable</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ArrayLiteralNode</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">elements</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ArrayAccessNode</span><span class="p">):</span>
+            <span class="n">array_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+            <span class="n">index_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">array_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot index into non-array value: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">array_value</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">index_int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">index_value</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">array_value</span><span class="p">[</span><span class="n">index_int</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid array access: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">BinaryOpNode</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_binary_op</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">UnaryOpNode</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_unary_op</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">FunctionCallNode</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_function_call</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown node type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve a variable from state using dot notation and array indexing.&quot;&quot;&quot;</span>
+        <span class="c1"># Handle array indexing like items[0]</span>
+        <span class="n">array_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^([^[\]]+)\[(\d+)\]$&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">array_match</span><span class="p">:</span>
+            <span class="n">var_name</span> <span class="o">=</span> <span class="n">array_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">array_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">var_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variable &#39;</span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s2">&#39; not found in state&quot;</span><span class="p">)</span>
+            <span class="n">var_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">var_name</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variable &#39;</span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s2">&#39; is not a list&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">var_value</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2"> out of bounds for &#39;</span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s2">&#39; (length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">var_value</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">var_value</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="c1"># Handle dot notation</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">part</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variable &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not found in state (missing &#39;</span><span class="si">{</span><span class="n">part</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid list index &#39;</span><span class="si">{</span><span class="n">part</span><span class="si">}</span><span class="s2">&#39; in variable &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot access property &#39;</span><span class="si">{</span><span class="n">part</span><span class="si">}</span><span class="s2">&#39; on </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">current</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">current</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_binary_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">BinaryOpNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate binary operations.&quot;&quot;&quot;</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;||&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="ow">or</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;&amp;&amp;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="ow">and</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;==&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">==</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;!=&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">!=</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;&lt;=&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">&gt;</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;&gt;=&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">&gt;=</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">-</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">*</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">right</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="s2">&quot;Division by zero&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">/</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;%&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="o">%</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;in&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="ow">in</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;not in&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">left</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">right</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown binary operator: </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">operator</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_unary_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">UnaryOpNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate unary operations.&quot;&quot;&quot;</span>
+        <span class="n">operand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operand</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;not&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="n">operand</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown unary operator: </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">operator</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_function_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">FunctionCallNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate function calls.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">function_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ExpressionParser</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown function: </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">function_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">func</span> <span class="o">=</span> <span class="n">ExpressionParser</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">function_name</span><span class="p">]</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">arguments</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ExpressionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function &#39;</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">function_name</span><span class="si">}</span><span class="s2">&#39; error: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="evaluate_expression">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.evaluate_expression">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_expression</span><span class="p">(</span><span class="n">expression</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluate an expression with the given state.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        expression: Expression string to evaluate</span>
+<span class="sd">        state: State dictionary for variable resolution</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Result of the expression evaluation</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ExpressionError: If expression is invalid or evaluation fails</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ExpressionParser</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+    <span class="n">ast</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+    <span class="n">evaluator</span> <span class="o">=</span> <span class="n">ExpressionEvaluator</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ast</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_expression">
+<a class="viewcode-back" href="../../api_reference/index.html#engine.expression_evaluator.validate_expression">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_expression</span><span class="p">(</span><span class="n">expression</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validate that an expression can be parsed without errors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        expression: Expression string to validate</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if expression is valid, False otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">ExpressionParser</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="n">ExpressionError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Pulsar Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; Pulsar 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Configuration" href="configuration.html" />
+    <link rel="prev" title="Quick Start Guide" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Pulsar
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-methods">Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pypi-recommended">PyPI (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poetry">Poetry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker">Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#homebrew-macos">Homebrew (macOS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#from-source">From Source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ai-provider-setup">AI Provider Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openai">OpenAI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#anthropic-claude">Anthropic Claude</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-models-ollama">Local Models (Ollama)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verification">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#development-installation">Development Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/workflows.html">Workflow Fundamentals</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#core-classes">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#agent-system">Agent System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#cli-interface">CLI Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#input-providers">Input Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#step-handlers">Step Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-models">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#module-0">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#type-definitions">Type Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#constants">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/index.html#environment-variables">Environment Variables</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#system-overview">System Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#core-principles">Core Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#component-architecture">Component Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#step-execution-flow">Step Execution Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#data-flow">Data Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#performance-considerations">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#security-architecture">Security Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#deployment-patterns">Deployment Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#monitoring-and-observability">Monitoring and Observability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#future-extensions">Future Extensions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-setup">Development Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#project-structure">Project Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development-workflow">Development Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#adding-new-features">Adding New Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#release-process">Release Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#changelog">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#getting-help">Getting Help</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pulsar</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<p>Pulsar supports multiple installation methods for different use cases.</p>
+<section id="system-requirements">
+<h2>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Python</strong>: 3.9 or higher</p></li>
+<li><p><strong>Operating System</strong>: Linux, macOS, or Windows</p></li>
+<li><p><strong>Memory</strong>: 4GB RAM minimum, 8GB recommended</p></li>
+<li><p><strong>Storage</strong>: 500MB free space</p></li>
+</ul>
+</section>
+<section id="installation-methods">
+<h2>Installation Methods<a class="headerlink" href="#installation-methods" title="Link to this heading"></a></h2>
+<section id="pypi-recommended">
+<h3>PyPI (Recommended)<a class="headerlink" href="#pypi-recommended" title="Link to this heading"></a></h3>
+<p>Install from PyPI using pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pulsar-compose
+</pre></div>
+</div>
+<p>For development or the latest features:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pulsar-compose
+</pre></div>
+</div>
+</section>
+<section id="poetry">
+<h3>Poetry<a class="headerlink" href="#poetry" title="Link to this heading"></a></h3>
+<p>If you use Poetry for dependency management:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>add<span class="w"> </span>pulsar-compose
+</pre></div>
+</div>
+</section>
+<section id="docker">
+<h3>Docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h3>
+<p>Use the official Docker image:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pull the image</span>
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/lsalihi/pulsar-compose:latest
+
+<span class="c1"># Run a workflow</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/workflows<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ghcr.io/lsalihi/pulsar-compose:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>pulsar<span class="w"> </span>run<span class="w"> </span>/workflows/my-workflow.yml
+</pre></div>
+</div>
+</section>
+<section id="homebrew-macos">
+<h3>Homebrew (macOS)<a class="headerlink" href="#homebrew-macos" title="Link to this heading"></a></h3>
+<p>Install on macOS using Homebrew:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>pulsar-compose
+</pre></div>
+</div>
+</section>
+<section id="from-source">
+<h3>From Source<a class="headerlink" href="#from-source" title="Link to this heading"></a></h3>
+<p>Clone and install from source:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/lsalihi/pulsar-compose.git
+<span class="nb">cd</span><span class="w"> </span>pulsar-compose
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ai-provider-setup">
+<h2>AI Provider Setup<a class="headerlink" href="#ai-provider-setup" title="Link to this heading"></a></h2>
+<section id="openai">
+<h3>OpenAI<a class="headerlink" href="#openai" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Get an API key from <a class="reference external" href="https://platform.openai.com/api-keys">OpenAI Platform</a></p></li>
+<li><p>Set the environment variable:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-api-key-here&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="anthropic-claude">
+<h3>Anthropic Claude<a class="headerlink" href="#anthropic-claude" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Get an API key from <a class="reference external" href="https://console.anthropic.com/">Anthropic Console</a></p></li>
+<li><p>Set the environment variable:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-api-key-here&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="local-models-ollama">
+<h3>Local Models (Ollama)<a class="headerlink" href="#local-models-ollama" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Install Ollama:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># macOS</span>
+brew<span class="w"> </span>install<span class="w"> </span>ollama
+
+<span class="c1"># Linux</span>
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://ollama.ai/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+
+<span class="c1"># Windows - download from https://ollama.ai/download</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Start Ollama service:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ollama<span class="w"> </span>serve
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Pull models:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ollama<span class="w"> </span>pull<span class="w"> </span>llama2<span class="w">          </span><span class="c1"># General purpose</span>
+ollama<span class="w"> </span>pull<span class="w"> </span>codellama<span class="w">       </span><span class="c1"># Code generation</span>
+ollama<span class="w"> </span>pull<span class="w"> </span>mistral<span class="w">         </span><span class="c1"># Fast and capable</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Configure Pulsar (optional):</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">OLLAMA_BASE_URL</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="verification">
+<h2>Verification<a class="headerlink" href="#verification" title="Link to this heading"></a></h2>
+<p>Verify your installation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check version</span>
+pulsar<span class="w"> </span>--version
+
+<span class="c1"># List available commands</span>
+pulsar<span class="w"> </span>--help
+
+<span class="c1"># Validate a workflow file</span>
+pulsar<span class="w"> </span>validate<span class="w"> </span>examples/simple_chain.yml
+</pre></div>
+</div>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<p>Common installation issues:</p>
+<p><strong>Python Version Error</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ERROR: Package &#39;pulsar-compose&#39; requires a different Python version
+</pre></div>
+</div>
+<p>Solution: Upgrade Python to 3.9+ or use a virtual environment with the correct version.</p>
+<p><strong>Import Error</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ModuleNotFoundError: No module named &#39;pulsar&#39;
+</pre></div>
+</div>
+<p>Solution: Ensure Pulsar is installed and you’re using the correct Python environment.</p>
+<p><strong>API Key Error</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ERROR: OpenAI API key not found
+</pre></div>
+</div>
+<p>Solution: Set the appropriate environment variables for your AI providers.</p>
+<p><strong>Ollama Connection Error</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ERROR: Cannot connect to Ollama
+</pre></div>
+</div>
+<p>Solution: Ensure Ollama is running with <code class="docutils literal notranslate"><span class="pre">ollama</span> <span class="pre">serve</span></code> and the correct base URL is set.</p>
+<p><strong>Permission Error (Linux/macOS)</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Permission denied
+</pre></div>
+</div>
+<p>Solution: Install with <code class="docutils literal notranslate"><span class="pre">--user</span></code> flag or use a virtual environment.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>pulsar-compose
+</pre></div>
+</div>
+</section>
+<section id="development-installation">
+<h2>Development Installation<a class="headerlink" href="#development-installation" title="Link to this heading"></a></h2>
+<p>For contributors and developers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/lsalihi/pulsar-compose.git
+<span class="nb">cd</span><span class="w"> </span>pulsar-compose
+
+<span class="c1"># Install with development dependencies</span>
+poetry<span class="w"> </span>install
+
+<span class="c1"># Or with pip</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+
+<span class="c1"># Run tests</span>
+pytest<span class="w"> </span>tests/
+
+<span class="c1"># Build documentation</span>
+<span class="nb">cd</span><span class="w"> </span>docs<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>html
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick Start Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Pulsar Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
