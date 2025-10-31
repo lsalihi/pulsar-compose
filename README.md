@@ -40,17 +40,19 @@ irm https://github.com/lsalihi/pulsar-compose/releases/latest/download/pulsar-wi
 **Run without installation:**
 
 ```bash
+# Docker Hub: https://hub.docker.com/r/lsalihi/pulsar-compose
+
 # Quick start
-docker run -it --rm lsalihi/pulsar-compose:latest pulsar --help
+docker run --rm lsalihi/pulsar-compose:latest --help
 
 # With your workflows
-docker run -v $(pwd):/workflows -it --rm lsalihi/pulsar-compose:latest pulsar run /workflows/my-workflow.yml
+docker run -v $(pwd):/workflows --rm lsalihi/pulsar-compose:latest run /workflows/my-workflow.yml
 
 # Docker Compose style
-docker run -v $(pwd):/workflows -it --rm lsalihi/pulsar-compose:latest pulsar compose up
+docker run -v $(pwd):/workflows --rm lsalihi/pulsar-compose:latest compose up
 
 # Persistent configuration
-docker run -v $(pwd):/workflows -v ~/.pulsar:/root/.pulsar -it --rm lsalihi/pulsar-compose:latest
+docker run -v $(pwd):/workflows -v ~/.pulsar:/root/.pulsar --rm lsalihi/pulsar-compose:latest
 ```
 
 ### 📦 Package Managers
