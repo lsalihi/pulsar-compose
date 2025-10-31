@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pulsar-compose"
-version = "0.1.1"
+version = "0.1.2"
 description = "Pulsar Workflow Engine for orchestrating AI agents"
 authors = ["Your Name <your.email@example.com>"]
 readme = "README.md"
@@ -91,7 +91,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pulsar-compose"
-version = "0.1.1"
+version = "0.1.2"
 description = "Docker-like AI workflow orchestration engine"
 authors = [
     {name = "Pulsar Team", email = "hello@pulsar-compose.dev"}
