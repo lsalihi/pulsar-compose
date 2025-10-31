@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Union
 import asyncio
 from datetime import datetime
 from .template import TemplateRenderer
@@ -59,49 +59,73 @@ class StateManager:
             return self._deep_copy(self._state)
 
     def _set_nested(self, data: Dict[str, Any], key: str, value: Any) -> None:
-        """Set a nested value using dot notation."""
+        """Set a nested value using dot notation.
+        This mutates the original data structure, creating intermediate dicts/lists as needed.
+        """
         keys = key.split('.')
-        current = data
-        parent = None
-        parent_key = None
+        current: Union[Dict[str, Any], List[Any]] = data
+        parent: Optional[Union[Dict[str, Any], List[Any]]] = None
+        parent_key: Optional[Union[str, int]] = None
 
-        for k in keys:
+        # Traverse all but the final key, creating containers as needed
+        for k in keys[:-1]:
             if k.isdigit():
                 idx = int(k)
                 if not isinstance(current, list):
-                    # Convert to list
-                    if parent is not None:
-                        parent[parent_key] = []
-                        current = parent[parent_key]
+                    # Convert parent slot into a list
+                    new_list: List[Any] = []
+                    if parent is None:
+                        # When at root, ensure data becomes a dict with numeric key only through a named key.
+                        # This case is unlikely for our workflows; safeguard by resetting current reference.
+                        current = new_list
                     else:
-                        # Root level - replace data with list
-                        data.clear()
-                        data.extend([])  # Make it a list
-                        current = data
+                        parent[parent_key] = new_list  # type: ignore[index]
+                        current = new_list
+                # Grow list with dict placeholders
                 while len(current) <= idx:
-                    current.append({})
+                    current.append({})  # type: ignore[attr-defined]
                 parent = current
                 parent_key = idx
-                current = current[idx]
+                current = current[idx]  # type: ignore[index]
             else:
                 if not isinstance(current, dict):
-                    # Convert to dict
-                    if parent is not None:
-                        parent[parent_key] = {}
-                        current = parent[parent_key]
+                    # Convert parent slot into a dict
+                    new_dict: Dict[str, Any] = {}
+                    if parent is None:
+                        # At root, ensure current is a dict
+                        current = new_dict
                     else:
-                        # Root level
-                        data.clear()
-                        current = data
+                        parent[parent_key] = new_dict  # type: ignore[index]
+                        current = new_dict
                 if k not in current:
-                    current[k] = {}
+                    current[k] = {}  # type: ignore[index]
                 parent = current
                 parent_key = k
-                current = current[k]
+                current = current[k]  # type: ignore[index]
 
-        # Now current is the final location, parent[parent_key] = value
-        if parent is not None:
-            parent[parent_key] = value
+        # Apply final key
+        final_key = keys[-1]
+        if final_key.isdigit():
+            idx = int(final_key)
+            if not isinstance(current, list):
+                new_list2: List[Any] = []
+                if parent is None:
+                    current = new_list2
+                else:
+                    parent[parent_key] = new_list2  # type: ignore[index]
+                    current = new_list2
+            while len(current) <= idx:
+                current.append(None)  # type: ignore[attr-defined]
+            current[idx] = value  # type: ignore[index]
+        else:
+            if not isinstance(current, dict):
+                new_dict2: Dict[str, Any] = {}
+                if parent is None:
+                    current = new_dict2
+                else:
+                    parent[parent_key] = new_dict2  # type: ignore[index]
+                    current = new_dict2
+            current[final_key] = value  # type: ignore[index]
 
     def _get_nested(self, data: Dict[str, Any], key: str, default: Any = None) -> Any:
         """Get a nested value using dot notation."""

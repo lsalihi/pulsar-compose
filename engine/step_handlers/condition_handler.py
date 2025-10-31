@@ -40,6 +40,10 @@ class ConditionStepHandler(BaseStepHandler):
 
     async def execute(self, step: "ConditionalStep") -> StepResult:
         """Execute a conditional step."""
+        from models.workflow import ConditionalStep
+        if not isinstance(step, ConditionalStep):
+            raise ValueError(f"ConditionStepHandler can only handle ConditionalStep, got {type(step)}")
+            
         try:
             # Get current state for evaluation
             current_state = await self.state_manager.get_state_snapshot()

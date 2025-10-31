@@ -43,6 +43,10 @@ class InteractionStepHandler(BaseStepHandler):
 
     async def execute(self, step: "InteractionStep") -> StepResult:
         """Execute an interaction step."""
+        from models.workflow import InteractionStep
+        if not isinstance(step, InteractionStep):
+            raise ValueError(f"InteractionStepHandler can only handle InteractionStep, got {type(step)}")
+            
         try:
             # Parse the ask_user configuration
             questions = self._parse_questions(step.ask_user)

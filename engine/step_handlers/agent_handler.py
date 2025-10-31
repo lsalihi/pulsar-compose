@@ -28,6 +28,10 @@ class AgentStepHandler(BaseStepHandler):
     )
     async def execute(self, step: "AgentStep") -> "StepResult":
         """Execute an agent step."""
+        from models.workflow import AgentStep
+        if not isinstance(step, AgentStep):
+            raise ValueError(f"AgentStepHandler can only handle AgentStep, got {type(step)}")
+            
         try:
             # Get agent configuration
             if step.agent not in self.agents:
